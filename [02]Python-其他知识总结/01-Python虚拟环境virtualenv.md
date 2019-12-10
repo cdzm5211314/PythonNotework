@@ -1,13 +1,13 @@
 """
-Python项目中必须包含一个requirements.txt文件，用于记录项目的所有依赖包以及其精确的版本号，以便在新环境（其他项目）中进行部署操作。
-如有两个项目： pythonproject1【虚拟环境project1】 和 pythonproject2【虚拟环境project2】
-1、在project1虚拟环境下执行 pip freeze > requirements.txt 命令生成pythonproject1项目所依赖的包及包的版本号
+Python项目中必须包含一个requirements.txt文件，用于记录项目的所有依赖包以及其精确的版本号，以便在新环境（其他项目）中进行部署操作。  
+如有两个项目： pythonproject1【虚拟环境project1】 和 pythonproject2【虚拟环境project2】  
+1、在project1虚拟环境下执行 pip freeze > requirements.txt 命令生成pythonproject1项目所依赖的包及包的版本号  
 2、如果想在pythonproject2项目中使用pythonproject1项目的相同版本号的依赖包，可以把pythonproject1项目中生成的requirements.txt文件拷贝到pythonproject2项目中，
-   并在pythonproject2项目的project2虚拟环境下执行pip install -r requirements.txt 命令
+   并在pythonproject2项目的project2虚拟环境下执行pip install -r requirements.txt 命令  
 """
 
 ### 系统环境与Python版本:
-- windows Python3.6.5
+- Windows7 Python3.6.5
 
 ### 虚拟环境的安装:
 - 配置Python解释器的系统环境变量

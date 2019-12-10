@@ -4,9 +4,9 @@
 - 下载: https://repo.anaconda.com/archive/  注意版本下载
 - 安装后配置系统环境变量: path E:\Developer_Tools\Anaconda3;E:\Developer_Tools\Anaconda3\Scripts;
 
-### 查看是否安装成功:
+### 查看是否安装成功并更新所有包:
 - 验证: conda --version
-- 升级: conda upgrade --all
+- 更新: conda upgrade --all
 
 ### 创建虚拟环境: (指定Python解释器版本)
 - 注: 创建虚拟环境的默认位置: E:\Developer_Tools\Anaconda3\envs (Anaconda安装目录下envs)
@@ -30,8 +30,9 @@
 
 ### 查看所有的虚拟环境:
 - conda env list
-- conda info --envs
 - conda info -e
+- conda info --envs
+
 
 ### 虚拟环境下的命令使用: (进入到虚拟环境)
 - 查看虚拟环境下的模块包: conda list 或 conda list --name python37
@@ -39,9 +40,11 @@
 - 虚拟环境中安装第三方模块包: conda install requests 或 pip install requests
 - 虚拟环境中卸载第三方模块包: conda remove requests 或 pip uninstall requests
 - 导入导出当前虚拟环境的包信息(.yaml文件):
-    - 导出: conda env export > environment.yaml
-    - 导入: conda env create -f environment.yaml
-
+    - 导出: conda env export > environment.yaml 或 pip freeze > requirements.txt
+    - 导入: conda env create -f environment.yaml 或 pip install -r requirements.txt
+    - 更新: conda env update -f enviroment.yml 更新目标环境与源环境一致
+    - 导入: pip install -r requirements.txt -i https://pypi.douban.com/simple
+    
 ### 修改Anaconda的JupyterNotebook默认工作路径:
 - 终端命令行下执行: jupyter notebook --generate-config ---> 生成一个 jupyter_notebook_config.py文件
     - C:\Users\Administrator\.jupyter\jupyter_notebook_config.py
@@ -49,5 +52,38 @@
 - 重新启动jupyter: jupyter notebook
 
 - 注: 或者直接执行命令: jupyter notebook E:\WorkSpace_PyCharm\JupyterNotebook
+
+
+### Anaconda-conda镜像设置:
+- 注: 由于anaconda的镜像在国外,所以访问会较慢,我们可以手动将镜像设置成清华TUNA镜像源
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 
+- conda config --set show_channel_urls yes
+- "conda config --set show_channel_urls yes" 表示设置搜索时显示通道地址设置完成后，就是在用户目录下生成.condarc文件，内容如下:
+```
+channels:
+- https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 
+- defaults 
+show_channel_urls: true
+```
+- 添加其他镜镜像源:
+```
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+conda config --set show_channel_urls yes
+```
+
+### Anaconda更新升级命令: 
+- 升级conda本身: conda update conda
+- 升级Anaconda应用: conda update anaconda
+- 升级spyder编辑器：conda update spyder
+- 升级Python解释器: conda update python 
+- 注:如当前python环境版本是3.6.0,而最新版本是3.6.5,那么就会升级到3.6.5
+- 更新所有包: conda update --all
+- 更新某个包: conda update packagename
 
 
