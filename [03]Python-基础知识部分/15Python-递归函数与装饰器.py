@@ -29,14 +29,14 @@
 # 缺点: 递归因系统环境影响大，当递归深度太大时，可能会得到不可预知的结果
 
 ## 控制递归层数的示例如下：
-def func(n):
-    print("递归进入第", n, "层")
-    if n == 3:
-        return
-    func(n + 1)
-    print("递归退出第", n, '层')
-func(1)
-print("程序结束")
+# def func(n):
+#     print("递归进入第", n, "层")
+#     if n == 3:
+#         return
+#     func(n + 1)
+#     print("递归退出第", n, '层')
+# func(1)
+# print("程序结束")
 
 
 ### 斐波那契数列: 1,1,2,3,5,8,13,21,34,......
@@ -60,42 +60,52 @@ print("程序结束")
 
 # ----------------------------------------------------------------------------------------- #
 
-## 高阶函数(High Order Function):
-# 高阶函数需满足下列任意条件:
-# 1.函数接受一个或多个函数作为参数传入
-# 2.函数返回一个函数
+## 高阶函数需满足下列任意条件:
+# 1.函数接受一个或多个函数名作为参数传入
+# 2.函数的返回值为一个函数的函数名
 # 示例如下:
-def func1():
-    print("func1 函数...")
-def func(func1):
-    return func1
-res = func(func1)  # ---> 调用func函数,返回一个函数名为func1的内存地址
-res()  # ---> 实际是调用func1函数
-print(res)
+# def func1():
+#     print("func1 函数...")
+# def func(func1):
+#     return func1
+# res = func(func1)  # ---> 调用func函数,返回一个函数名为func1的内存地址
+# res()  # ---> 实际是调用func1函数
+# print(res)
 
 # ----------------------------------------------------------------------------------------- #
 
-## 函数的闭包(closure): 将内嵌函数的语句和这些语句的执行环境打包在一起时，得到的对象称为闭包(closure)
-# 闭包必须满足3个条件:
+## 函数的闭包必须满足3个条件:
 # 1.外部函数中定义了内部函数
-# 2.外部函数必须有返回值且必须是内部函数名
+# 2.外部函数必须有返回值且返回的是内部函数的函数名
 # 3.内部函数必须引用外部函数中的变量
 # 闭包示例如下:
 def func(var):
     def test(args):
         return args ** var
-    print(locals())
     return test
-res = func(3)  # ---> 调用func函数,并把实参3传递给var变量,返回一个函数名为test的内存地址
-res2 = res(2)  # ---> 实际为调用test函数,并把实参2传递给args变量,返回一个运算结果
-print(res)
+res = func(3)  # ---> 调用func函数,并把实参3传递给var变量,返回一个函数名为test的内存地址,即res=test
+res2 = res(2)  # ---> 实际为调用test函数,并把实参2传递给args变量,返回一个运算结果,即 res2 = args ** var
 print(res2)
 res3 = func(2)(5)
 print(res3)
 
+print(" ----- 闭包函数的特点(好处)演示 ----- begin ")
+def wrapper_func(a, b):
+    c = 10
+    def inner_func():
+        result = a + b + c
+        print("a + b + c = " + str(result))
+    return inner_func
+
+ifunc = wrapper_func(3, 5)  # 第一次调用外层函数并传值
+ifunc1 = wrapper_func(7, 9)  # 第二次调用外层函数并传值
+ifunc1()  # 调用 第二次调用外层函数 返回的函数
+ifunc()  # 调用 第一次调用外层函数 返回的函数
+
+print(" ----- 闭包函数的特点(好处)演示 ----- end ")
+
 # ----------------------------------------------------------------------------------------- #
-import time
-from functools import wraps
+
 ### 装饰器(decorators): 函数装饰器是指装饰的是一个函数，传入的是一个函数，返回的也是一个函数的函数
 ## 装饰器原则：
 # 1.不修改被修饰函数的源代码
@@ -116,6 +126,7 @@ from functools import wraps
 # 注: 多层装饰器,首先执行离被装饰函数最近的那个装饰器函数
 
 """
+# 装饰器函数
 def decorate(func):
     print("decorate被执行...1...")
     def wrapper():
@@ -124,10 +135,16 @@ def decorate(func):
         print("wrapper被执行...5...")
     print("decorate被执行...2...")
     return wrapper
+
+# 被装饰的函数    
 @decorate
 def demo():
     print("被装饰函数demo...4...")
+
+# 调用被装饰的函数    
 demo()
+
+# 函数的执行顺序
 1. Python解释器从上往下执行程序,此示例先加载函数
 2. 当出现@decorate时,Python解释器底层就会执行装饰器函数(decorate)
 3. 将被装饰函数(demo)作为参数传递给装饰器函数(decorate)的形参(func) ---> func = demo
@@ -136,6 +153,10 @@ demo()
 """
 
 ## 示例如下:
+
+import time
+from functools import wraps
+
 def decorate(fn):
     @wraps(fn)
     def wrapper(name, x):
@@ -143,9 +164,11 @@ def decorate(fn):
         fn(name, x)
         print("发送消息:", name, '办了', x,'元的业务...')
     return wrapper
+
 @decorate
 def withdraw(name, x):
     print(name, '取钱', x, '元')
+
 withdraw('小王', 300)
 
 
