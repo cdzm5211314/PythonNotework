@@ -4,10 +4,11 @@
 # @Date : 2019-07-01 12:56
 
 ### Python的基本数据类型:
-# 数字(整型int,浮点型float,复数complex,布尔型bool[True-1,Flase-0])
+# 数字number: (整型int,浮点型float,复数complex,布尔型bool)
 # 字符串str: ""
 # 列表list: []
 # 元组tuple: ()
+# 集合set: {}
 # 字典dict: {key:value}
 
 ### None 表示一个不存在的特殊对象
