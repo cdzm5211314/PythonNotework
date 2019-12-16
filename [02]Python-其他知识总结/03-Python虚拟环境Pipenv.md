@@ -16,17 +16,14 @@ Pipenv集成了pip,virtualenv两者的功能,且完善了两者的一些缺陷
 ### 虚拟环境的创建及讲解:
 * 安装Pipen工具: `pip install pipenv`
 * 查看Pipenv安装是否成功: `pipenv --version`
-* 配置虚拟环境位置的系统环境变量:
-```python3
-WORKON_HOME E:\Developer_Tools\PythonEnvs
-```
+* 配置虚拟环境位置的系统环境变量: `WORKON_HOME ---> E:\Developer_Tools\PythonEnvs`
 * 创建虚拟环境(如系统已安装了Python2,Python3):
 ```python3
-# 即进入到项目根目录下执行如下命名
-pipenv --two    # 会使用当前系统的Python2创建虚拟环境
-pipenv --three  # 会使用当前系统的Python3创建虚拟环境
-pipenv --python python3.6  # 指定某一Python版本创建虚拟环境
-pipenv --python=E:\Developer_Tools\Python\Python27\python2.exe  # 指定某一Python版本创建虚拟环境
+# 即进入到项目根目录下执行如下命令
+# pipenv --two    # 会使用当前系统的Python2创建虚拟环境
+# pipenv --three  # 会使用当前系统的Python3创建虚拟环境
+# pipenv --python python3.6  # 指定某一Python版本创建虚拟环境
+# pipenv --python=E:\Developer_Tools\Python\Python27\python2.exe  # 指定某一Python版本创建虚拟环境
 # 注: 初始化好虚拟环境后,会在项目根目录下生成两个文件: Pipfile 和 Pipfile.lock
 ```
 
