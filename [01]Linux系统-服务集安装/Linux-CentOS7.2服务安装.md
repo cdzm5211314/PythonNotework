@@ -253,28 +253,37 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
 
 
 ### Python3.6.5安装:
-- 准备编译环境
-```
-yum groupinstall 'Development Tools'
-yum install -y ncurses-libs zlib-devel mysql-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
-```
-- 下载Python压缩包
+- 下载压缩文件解压,并进入到解压目录
 ```
 wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
+tar -xf Python-3.6.5.tgz
+cd ./Python-3.6.5
 ```
-- 创建安装目录并解压
+- 准备编译环境并安装依赖包
 ```
-sudo mkdir /usr/local/python3
-tar -zxvf Python-3.6.5.tgz
+yum install -y gcc
+yum install -y zlib* openssl*
 ```
 - 安装Python3.6.5
 ```
-cd /usr/local/python3/Python-3.6.5/
+# 预编译,--enable-optimizations配置项用于提高Python安装后的性能,但是会导致安装慢
 ./configure --prefix=/usr/local/python3 --enable-optimizations
-make & make install
-# --enable-optimizations配置项用于提高Python安装后的性能,但是会导致安装慢
+# 安装
+make install
 ```
-- 创建Python软链接
+- 配置环境变量
+```
+vi /etc/profile
+export PATH=$PATH:/usr/local/python3/bin
+source /etc/profile
+```
+- 解释器: `python(pip)执行Python2` 和 `python3(pip3)指向Python3`
+- 安装外部库测试
+```
+pip3 install pipenv
+```
+
+- 创建Python软链接(未使用)
 ```
 第一种:
 # 默认python指向Python2,这里创建python3指向Python3
@@ -286,6 +295,7 @@ ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
 vi /etc/profile
 export PATH=$PATH:/usr/local/python3/bin
 source /etc/profile
+
 第二种: (使用此种方式)
 # 默认python指向Python2,这里创建python3指向Python3
 备份原文件为python2: sudo mv /usr/bin/python /usr/bin/python2
@@ -299,24 +309,27 @@ source /etc/profile
 将 #!/usr/bin/python 改为 #!/usr/bin/python2.7
 sudo yum search pip ---> 用于测试yum是否正常工作
 ```
-- 安装外部库测试
+
+* 安装Scrapy框架(下载Twisted模块包)
 ```
-pip3 install pymysql
+下载: wget https://twistedmatrix.com/Releases/Twisted/19.10/Twisted-19.10.0.tar.bz2
+解压: tar -xf Twisted-19.10.0.tar.bz2
+进入解压目录: cd Twisted-19.10.0
+安装: python3 setup.py installl
+然后就可以安装scrapy: pip3 install scrapy
 ```
 
-
-
-### 安装Python虚拟环境:
+### 安装Python虚拟环境: virtualenv
 - 安装虚拟环境
 ```
-# 创建存放虚拟环境的隐藏目录: sudo mkdir -p /root/.virtualenv
-pip install virtualenv
-pip install virtualenvwrapper
+# 创建存放虚拟环境的隐藏目录: sudo mkdir -p /envs
+pip3 install virtualenv
+pip3 install virtualenvwrapper
 ```
 - 配置环境变量
 ```
 编辑文件: vi ~/.bashrc ---> 添加如下两行内容
-export WORKON_HOME=/root/.virtualenvs 
+export WORKON_HOME=/envs 
 source /usr/local/python3/bin/virtualenvwrapper.sh 
 立即生效: source ~/.bashrc 
 ```
@@ -329,6 +342,33 @@ source /usr/local/python3/bin/virtualenvwrapper.sh
 # 退出虚拟环境: deactivate
 # 删除虚拟环境需要先退出虚拟环境: rmvirtualenv my_django115
 ```
+
+### 安装Python虚拟环境: pipenv
+- 安装虚拟环境
+```
+# 创建存放虚拟环境的隐藏目录: sudo mkdir -p /envs
+pip3 install pipenv
+```
+- 配置环境变量
+```
+编辑文件: vi ~/.bashrc ---> 添加如下两行内容
+export WORKON_HOME=/envs 
+# source /usr/local/python3/bin/pipenv 
+立即生效: source ~/.bashrc 
+```
+- 虚拟环境相关命令
+```
+# 创建虚拟环境: pipenv --three
+# 创建虚拟环境: pipenv --python python3
+# 进入虚拟环境: pipenv shell
+# 退出虚拟环境: exit
+# 删除虚拟环境[项目根目录]: `pipenv --rm` 
+# 查看虚拟环境包列表: pip list
+# 查看项目的根目录: `pipenv --where` 
+# 查看虚拟环境目录: `pipenv --venv` 
+# 查看Pytho解释器位置: `pipenv --py`
+```
+
 
 
 
