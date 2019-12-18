@@ -1,4 +1,4 @@
-# CentOS7.2(最小系统)- 安装服务 #
+# CentOS7.2(最小系统) - 安装服务 #
 
 ### 安装上传与下载服务:
 - 安装wget服务: sudo yum -y install wget
@@ -330,6 +330,7 @@ pip3 install virtualenvwrapper
 ```
 编辑文件: vi ~/.bashrc ---> 添加如下两行内容
 export WORKON_HOME=/envs 
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/python3/bin/python3
 source /usr/local/python3/bin/virtualenvwrapper.sh 
 立即生效: source ~/.bashrc 
 ```
