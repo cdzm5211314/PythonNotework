@@ -8,7 +8,7 @@
 
 
 
-### Docker服务安装:
+### Docker服务安装: 2375
 - 安装前的准备依赖  
 ```
 yum -y install gcc  
@@ -67,7 +67,7 @@ docker run hello-world
 
 
 
-### Nginx服务安装:
+### Nginx服务安装: 80
 - 安装 pcre openssl zlib gcc 依赖: 
 ```
 直接安装: yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
@@ -126,7 +126,7 @@ Warning: nginx.service changed on disk. Run 'systemctl daemon-reload' to reload 
 
 
 
-### MySQL5.6服务安装:
+### MySQL5.6服务安装: 3306
 - 安装前的准备工作
 ```
 查看是否安装了MySQL服务: rpm -qa | grep mysql ---> 空值表示未安装
@@ -167,7 +167,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'your username'@'%' IDENTIFIED BY 'your password'
 
 
 
-### Redis服务安装:
+### Redis服务安装: 6379
 - 下载安装Redis
 ```
 安装依赖: yum install -y gcc
@@ -214,7 +214,7 @@ WantedBy=multi-user.target
 
 
 
-### MongoDB服务安装:
+### MongoDB服务安装: 27017
 - 配置mongodb的yum源:
 ```
 1.编辑文件: vi /etc/yum.repos.d/mongodb-org-4.0.repo

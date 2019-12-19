@@ -116,7 +116,7 @@ sudo pip3 install virtualenvwrapper
 虚拟环境中安装模块包: pip3 install package_name
 ```
 
-### 安装Python虚拟环境常用命令: pipenv
+### Python虚拟环境常用命令: pipenv
 ```
 # 创建虚拟环境: pipenv --three
 # 创建虚拟环境: pipenv --python python3
@@ -274,7 +274,7 @@ WantedBy=multi-user.target
 重启nginx服务: systemctl restart nginx
 ```
 
-### 安装Docker服务: 
+### 安装Docker服务: 2375
 ```
 # 安装http相关软件包:
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
