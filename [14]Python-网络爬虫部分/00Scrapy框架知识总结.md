@@ -512,11 +512,11 @@ DOWNLOADER_MIDDLEWARES = {
         REDIS_HOST = '127.0.0.1'
         REDIS_PORT = 6379
         ```
-    * 必选-使用了scrapy-redis的调度器,在redis数据库里分配请求
+    * 必选-调度器: 把待爬取的请求存储到基于redis的队列中
         ```python3
         SCHEDULER = "scrapy_redis.scheduler.Scheduler"
         ```
-    * 必选-使用了scrapy_redis 的去重组件,在redis数据库里做去重
+    * 必选-去重组件: 把已爬取的指纹存储到基于redis的set集合中
         ```python3
         DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
         ```
@@ -526,8 +526,13 @@ DOWNLOADER_MIDDLEWARES = {
             'scrapy_redis.pipelines.RedisPipeline' : 300
         }
         ```
+    * 可选-是否进行调度持久化
+        ````python3
+        # True: 当程序结束时,会保持Redis中已爬取指纹和待爬取的请求
+        # False: 当程序结束时,会清空Redis中已爬取指纹和待爬取的请求
+        SCHEDULER_PERSIST = True
+        ````
     * `DUPEFILTER_DEBUG =True`  # 设置为True,记录所有重复的请求,默认情况下RFPDupeFilter只记录第一个重复请求
-    * `SCHEDULER_PERSIST = True`  # 设置为True,爬虫退出时,不清理redis中的数据,暂停后可以继续执行
     * 指定排序爬取地址时使用的队列
         ```python3
         SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderPriorityQueue'  # 默认的,按优先级排序
@@ -541,10 +546,10 @@ DOWNLOADER_MIDDLEWARES = {
     
     ```
 * scrapy-redis键名介绍: key - value
-    * "项目名:start_urls" ---> list类型,用于获取spider启动时爬取的第一个url地址
-    * "项目名:dupefilter" ---> set类型,用于爬虫访问的url去重,内容是url地址的hash值字符串
-    * "项目名:items" ---> list类型,保存爬虫获取到的数据item,内容是json字符串
-    * "项目名:requests" ---> zset类型,用于调度器处理requests,内容是request对象字符串
+    * "项目名:start_urls"  ---> list类型,用于获取spider启动时爬取的第一个url地址
+    * "项目名:items"       ---> list类型,保存爬虫获取到的数据item,内容是json字符串
+    * "项目名:dupefilter"  ---> set类型,用于爬虫访问的url去重,内容是url地址的hash值字符串
+    * "项目名:requests"    ---> zset类型,用于调度器处理requests,内容是request对象字符串
 
 ### 分布式爬虫: 从Redis中取出数据导入到MongoDB
 ```python3
@@ -568,5 +573,113 @@ def main()"
         # 插入数据到mongodb中
         collection.insert(item)
 ```
+        
+### 分布式爬虫: 从MongoDB中取出数据导入到Redis
+```
+from redis import StrictRedis
+from pymongo import MongoClient
+from JDMallSpider.settings import MONGODB_URL,REDIS_URL
+from JDMallSpider.spiders.jd_productredis import JdProductRedisSpider
+import pickle
+# 把MonogoDB数据的数据转存到Redis数据库
+def category_from_mongodb_to_redis():
+    # redis数据库连接
+    redis_client = StrictRedis.from_url(REDIS_URL)
+    # mongodb数据库连接
+    mongo_client = MongoClient(MONGODB_URL)
+    # 读取MongoDB中的分类信息,序列化字典数据后,添加到商品信息爬虫的redis-key指定的list
+    # 获取MongoDB数据库的集合
+    collection = mongo_client['jingdong']['jd_category']
+    # 读取分类信息
+    cursor = collection.find()
+    for category in cursor:
+        # 序列化字典数据
+        data = pickle.dumps(category)
+        # 添加到商品信息爬虫的redis-key指定的list
+        redis_client.lpush(JdProductRedisSpider.redis_key, data)
+    # 关闭MongoDB数据库
+    mongo_client.close()
+```
+
+### Scrapy同时执行多个爬虫的方式:
+* 第一种方式: 使用核心API的方式执行多个爬虫: scrapy.crawler.CrawlerProces
+    ```
+    # 该类将为您启动Twisted reactor,配置日志记录并设置关闭处理程序,此类是所有Scrapy命令使用的类
+    from scrapy.crawler import CrawlerProcess
+    from scrapy.utils.project import get_project_settings
+    from scrapy.utils.log import configure_logging
+    from JDMallSpider.spiders.jd_category import JdCategorySpider
+    from JDMallSpider.spiders.jd_product import JdProductSpider
+    configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+    process = CrawlerProcess(settings=get_project_settings())  # 获取settings.py配置文件信息
+    process.crawl(JdCategorySpider)
+    process.crawl(JdProductSpider)
+    process.crawl(*[JdCategorySpider,JdProductSpider])
+    process.start()
+    ```
+* 第二种方式: 使用核心API的方式执行多个爬虫: scrapy.crawler.CrawlerRunner
+    ```
+    # 此类封装了一些简单的帮助程序来运行多个爬虫程序,但它不会以任何方式启动或干扰现有的爬虫
+    from scrapy.crawler import CrawlerRunner
+    from scrapy.utils.project import get_project_settings
+    from twisted.internet import reactor
+    from scrapy.utils.log import configure_logging
+    from JDMallSpider.spiders.jd_category import JdCategorySpider
+    from JDMallSpider.spiders.jd_product import JdProductSpider
+    configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+    runner = CrawlerRunner(settings=get_project_settings())
+    runner.crawl(JdCategorySpider)
+    runner.crawl(JdProductSpider)
+    d = runner.join()
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
+    
+    ## 或者通过异步执行多个爬虫: 顺序执行
+    from scrapy.crawler import CrawlerRunner
+    from scrapy.utils.project import get_project_settings
+    from twisted.internet import reactor, defer
+    from scrapy.utils.log import configure_logging
+    from JDMallSpider.spiders.jd_category import JdCategorySpider
+    from JDMallSpider.spiders.jd_product import JdProductSpider
+    configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+    runner = CrawlerRunner(settings=get_project_settings())
+    @defer.inlineCallbacks
+    def crawl():
+        yield runner.crawl(JdCategorySpider)
+        yield runner.crawl(JdProductSpider)
+        reactor.stop()
+    crawl()
+    reactor.run()
+    ```
+* 第三种方式: 使用自定义Scrapy命令的方式执行多个爬虫
+    ```
+    # 1.在spiders同级目录下新建commands包目录,并在该包目录下新建crawlall.py文件
+    # 如: 项目名称.项目名称.commands.crawlall.py
+    # 2.复制Scrapy框架源代码里的commands文件夹的crawl.py源码到新建的crawlall.py文件中
+    # 如: scrapy.commands.crawl.py
+    # 3.只修改crawlall.py中的run()方法: 如下所示
+    # def run(self, args, opts):
+    #     # 获取项目下的所有爬虫名称列表
+    #     spider_loader_list = self.crawler_process.spider_loader.list()
+    #     print(spider_loader_list)
+    #     # 遍历爬虫名称列表
+    #     for spidername in spider_loader_list or args:
+    #         print('此时启动的爬虫名字为: ' + spidername)
+    #         self.crawler_process.crawl(spidername, **opts.spargs)
+    #     self.crawler_process.start()
+    # 4.在settings.py文件配置信息
+    # COMMANDS_MODULE = '项目名称.新建目录名称'
+    # 如: COMMANDS_MODULE = 'JDMallSpider.commands'
+    # 5.启动爬虫使用crawlall命令即可:
+    # 5.1 可以创建一个文件执行: scrapy.cmdline.execute(["scrapy", "crawlall"])
+    # 5.2 可以直接在命令行执行: scrapy crawlall --nolog
+    # execute(["scrapy", "crawlall", "--nolog"])
+    ```
+* 第四种方式: 使用os.system函数将字符串转化成命令的方式执行多个爬虫: 顺序执行
+    ```
+    # import os
+    # os.system("scrapy crawl jd_category")
+    # os.system("scrapy crawl jd_product")
+    ```
 
 
