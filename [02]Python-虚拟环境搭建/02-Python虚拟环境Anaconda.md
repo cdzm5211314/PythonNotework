@@ -44,6 +44,19 @@
     - 导入: conda env create -f environment.yaml 或 pip install -r requirements.txt
     - 更新: conda env update -f enviroment.yml 更新目标环境与源环境一致
     - 导入: pip install -r requirements.txt -i https://pypi.douban.com/simple
+
+### conda install xxx 与 pip install xxx 的区别:
+```
+# 管理器包范围:
+conda是通用包管理系统,与语言无关的的跨平台环境管理器;conda在conda环境中按装任何包
+pip只是Python语言下的通用包管理器;pip在任何环境中安装Python包
+
+# 安装位置:
+conda安装位置: xxx\Anaconda3\pkgs\*
+pip: xxx\Anaconda3\envs\虚拟环境\Lib\site-packages\*
+# 如果多个虚拟环境时,conda install xxx,对于同一个包只安装一次,由conda集中管理
+# 如果多个虚拟环境时,pip install xxx,只会安装在当前使用的虚拟环境中,故会重复安装
+```
     
 ### 修改Anaconda的JupyterNotebook默认工作路径:
 - 终端命令行下执行: jupyter notebook --generate-config ---> 生成一个 jupyter_notebook_config.py文件
