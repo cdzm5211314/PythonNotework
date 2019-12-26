@@ -4,9 +4,9 @@
 # @Date : 2019-07-15 15:31
 
 ### 增加数据操作 ###
-## 1. Entry.objects.create(属性=值,属性=值)  # 返回值：创建好的实体对象
-## 2. 创建一个 Entry 对象，并通过 save() 进行保存
-# obj = Entry(属性=值,属性=值)
+## 1. Entity.objects.create(属性=值,属性=值)  # 返回值：创建好的实体对象
+## 2. 创建一个 Entity 对象，并通过 save() 进行保存
+# obj = Entity(属性=值,属性=值)
 # obj.属性 = 值
 # obj.save()
 ## 3. 使用字典构建对象，并通过 save() 进行保存
@@ -14,7 +14,7 @@
 #     '属性1':'值1',
 #     '属性2':'值2',
 # }
-# obj=Entry(**dic)
+# obj=Entity(**dic)
 # obj.save()
 
 
@@ -41,50 +41,50 @@
 
 ### 查询数据操作 ###
 ## 查询所有数据: all()
-# Entry.objects.all()  # 返回值：QuerySet(查询结果集,是一个封装了若干对象的列表)
+# Entity.objects.all()  # 返回值：QuerySet(查询结果集,是一个封装了若干对象的列表)
 
 ## 只查询一条数据: get(条件)
-# Entry.objects.get(条件)
+# Entity.objects.get(条件)
 # 注: 该方法只能查询一条数据,查询多于一条数据或没查询出结果的话那么都会抛异常
 
 ## 查询返回指定列: values() 与 values('列1','列2',...)
 # 作用: 查询一个QuerySet中的部分列，并封装成字典，再放到列表中
-# Entry.objects.values()
-# Entry.objects.values('列1','列2')
-# Entry.objects.all().values()
-# Entry.objects.filter().values()
+# Entity.objects.values()
+# Entity.objects.values('列1','列2')
+# Entity.objects.all().values()
+# Entity.objects.filter().values()
 
 ## 查询返回指定列: values_list() 与 values_list('列1','列2')
 # 作用: 查询一个QuerySet中的部分列，并封装成元组，再放到列表中
-# Entry.objects.values_list()
-# Entry.objects.values_list('列1','列2')
-# Entry.objects.all().values_list()
-# Entry.objects.filter().values_list()
+# Entity.objects.values_list()
+# Entity.objects.values_list('列1','列2')
+# Entity.objects.all().values_list()
+# Entity.objects.filter().values_list()
 
 # 总结: values()和values_list()里面写什么字段,就相当于select查询什么字段
 
 ## 根据条件查询部分行数据: filter(条件)
-# 语法: Entry.objects.filter(条件)
+# 语法: Entity.objects.filter(条件)
 # 1.构建等值条件:
 # 示例: Author.objects.filter(id=1)
 # 示例: Author.objects.filter(id=1,name='隔壁老王')
 # 2.构建不等值条件: __gt, __lt, __contains,__startswith,__endswith, __in, __range, __date, ...
-# Entry.objects.filter(属性__查询谓词=值)
+# Entity.objects.filter(属性__查询谓词=值)
 # 即: ### 单表查询的双下划线操作 ###
-# 示例: Entry.objects.filter(id__gt=5)              # 获取id大于5的数据
-# 示例: Entry.objects.filter(id__lt=10, id__gt=1)   # 获取id大于1 且 小于10的数据
-# 示例: Entry.objects.filter(id__in=[11, 22, 33])   # 获取id等于11、22、33的数据
-# 示例: Entry.objects.exclude(id__in=[11, 22, 33])  # not in
-# 示例: Entry.objects.filter(name__contains="ven")  # 获取name字段包含"ven"的
-# 示例: Entry.objects.filter(id__range=[1, 3])      # id范围是1到3的，等价于SQL的bettwen and
+# 示例: Entity.objects.filter(id__gt=5)              # 获取id大于5的数据
+# 示例: Entity.objects.filter(id__lt=10, id__gt=1)   # 获取id大于1 且 小于10的数据
+# 示例: Entity.objects.filter(id__in=[11, 22, 33])   # 获取id等于11、22、33的数据
+# 示例: Entity.objects.exclude(id__in=[11, 22, 33])  # not in
+# 示例: Entity.objects.filter(name__contains="ven")  # 获取name字段包含"ven"的
+# 示例: Entity.objects.filter(id__range=[1, 3])      # id范围是1到3的，等价于SQL的bettwen and
 
 ## 对条件取反: exclude(条件)
-# Entry.objects.exclude(条件)
+# Entity.objects.exclude(条件)
 # 示例: Author.objects.exclude(id=1)             # select * from index_author where not(id=1)
 # 示例: Author.objects.exclude(id=1,age__lt=30)  # select * from index_author where  not (id=1 and age < 30)
 
 ## 排序查询: order_by()
-# Entry.objects.order_by('列1','-列2')
+# Entity.objects.order_by('列1','-列2')
 # 注: 默认是升序排序，列名前加 - 则表示降序排序
 
 ## reverse()  # 对查询结果反向排序,通常只能在具有已定义顺序的QuerySet上调用(在model类的Meta中指定ordering或调用order_by()方法)
@@ -113,13 +113,13 @@
 # 5.Max():   最大值
 
 ## 聚合查询(不带分组): aggregate()
-# Entry.objects.all().aggregate(别名=聚合函数('列'))
+# Entity.objects.all().aggregate(别名=聚合函数('列'))
 # 示例: Author.objects.all().aggregate(avg=Avg('age'))
 # 示例: Book.objects.aggregate(average_price=Avg('price'))
 
 ## 聚合查询(带分组): annotate() ---> annotate()前面的values("列1","列2")表示按照哪个列进行分组
-# Entry.objects.all().values('分组列1','分组列2').annotate(别名=聚合函数('列')).values('查询列1','查询列2','查询列3')
-# Entry.objects.filter(条件).values('分组列').annotate(别名=聚合函数('列')).filter(条件)
+# Entity.objects.all().values('分组列1','分组列2').annotate(别名=聚合函数('列')).values('查询列1','查询列2','查询列3')
+# Entity.objects.filter(条件).values('分组列').annotate(别名=聚合函数('列')).filter(条件)
 # 示例: Employee.objects.values("dept").annotate(avg=Avg("salary").values(dept, "avg")
 
 
@@ -140,7 +140,7 @@
 
 ### 原生的数据库操作方法 ###
 ## 查询: raw(sql语句)
-# Entry.objects.raw(sql)  ---> 返回: QuerySet
+# Entity.objects.raw(sql)  ---> 返回: QuerySet
 ## 增删改: connection.cursor().execute(sql语句)
 from django.db import connection
 def doSQL(request):
@@ -152,7 +152,7 @@ def doSQL(request):
 
 ### 关系字段:
 ## OneToOneField: 一对一，将字段定义在任意一端中(Author,Wife)
-# 属性 = models.ForeignKey(Entry)
+# 属性 = models.ForeignKey(Entity)
 # 示例: author = models.OneToOneField(Author)
 # 数据库中: 在Wife对应表中(wife)生成一个外键(author_id),引用自Author对应表(author)的主键
 # 在Author模型类中: 会增加一个隐式属性叫wife
@@ -164,7 +164,7 @@ def doSQL(request):
 # wife = author.wife
 
 ## ForeignKey: 一对多，将字段定义在多的一端端中(Publisher,Book)
-# 属性 = models.ForeignKey(Entry)
+# 属性 = models.ForeignKey(Entity)
 # 示例: publisher = models.ForeignKey(Publisher)
 # 正向查询: 通过Book查询Publisher
 # book = Book.objects.get(id=1)
@@ -174,7 +174,7 @@ def doSQL(request):
 # books = pub.book_set.all()
 
 ## ManyToManyField: 多对多，将字段定义在任意一端中(Author,Book)
-# 属性 = models.ManyToManyField(Entry)
+# 属性 = models.ManyToManyField(Entity)
 # 示例: authors = models.ManyToManyField(Author)
 
 
