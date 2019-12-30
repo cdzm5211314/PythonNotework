@@ -15,27 +15,31 @@
 - 注: 创建虚拟环境并指定位置: E:\Developer_Tools\AnacondaEnvs
 - 创建虚拟环境: conda create -n E:\Developer_Tools\AnacondaEnvs\python35 python=3.5
 - 创建虚拟环境: conda create --name E:\Developer_Tools\AnacondaEnvs\python35 python=3.5
+- 注: 虚拟环境创建后,虚拟环境中只有Python相关的必须项,如Python,pip等,如果需要安装Anaconda集合包,如下操作:
+    ```
+    conda install anaconda  # 在当前环境下安装Anaconda集合包
+    conda create --name envs_name python=3.6.5 anaconda  # 创建虚拟环境时,安装Anaconda集合包 
+    ```
 
 ### 进入(切换)虚拟环境:
-- 默认位置的虚拟环境: activate python35
-- 指定位置的虚拟环境: activate E:\Developer_Tools\AnacondaEnvs\python35
+- 默认位置的虚拟环境: conda activate python35
+- 指定位置的虚拟环境: conda activate E:\Developer_Tools\AnacondaEnvs\python35
+
+### 退出当前虚拟环境:
+- conda deactivate
 
 ### 删除虚拟环境:
 - 删除默认位置的虚拟环境: conda remove -n python35 --all
 - 删除默认位置的虚拟环境: conda remove --name python35 --all
 - 删除指定位置的虚拟环境: conda remove --name E:\Developer_Tools\AnacondaEnvs\python35 --all
 
-### 退出虚拟环境:
-- deactivate
-
 ### 查看所有的虚拟环境:
 - conda env list
 - conda info -e
 - conda info --envs
 
-
 ### 虚拟环境下的命令使用: (进入到虚拟环境)
-- 查看虚拟环境下的模块包: conda list 或 conda list --name python37
+- 查看虚拟环境下的模块包: conda list 或 pip list 或 conda list --name python37
 - 查看虚拟环境下的Python解释器版本: python --version
 - 虚拟环境中安装第三方模块包: conda install requests 或 pip install requests
 - 虚拟环境中卸载第三方模块包: conda remove requests 或 pip uninstall requests
@@ -63,31 +67,53 @@ pip: xxx\Anaconda3\envs\虚拟环境\Lib\site-packages\*
     - C:\Users\Administrator\.jupyter\jupyter_notebook_config.py
 - 修改此文件内容[214行]: c.NotebookApp.notebook_dir = 'E:\WorkSpace_PyCharm\JupyterNotebook' (指定位置)
 - 重新启动jupyter: jupyter notebook
-
 - 注: 或者直接执行命令: jupyter notebook E:\WorkSpace_PyCharm\JupyterNotebook
 
 
 ### Anaconda-conda镜像设置:
-- 注: 由于anaconda的镜像在国外,所以访问会较慢,我们可以手动将镜像设置成清华TUNA镜像源
+- 注: 由于anaconda的镜像在国外,所以访问会较慢,我们可以手动将镜像设置成清华TUNA镜像源,添加多个镜像源如下
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 - conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 
 - conda config --set show_channel_urls yes
-- "conda config --set show_channel_urls yes" 表示设置搜索时显示通道地址设置完成后，就是在用户目录下生成.condarc文件，内容如下:
-```
+- "conda config --set show_channel_urls yes" 表示设置搜索时显示通道地址设置完成后,就在用户目录下生成.condarc文件，内容如下:
+``` 如: C:\Users\Administrator\.condarc
 channels:
-- https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 
-- defaults 
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+  [删除]- defaults
 show_channel_urls: true
 ```
 - 添加其他镜镜像源:
 ```
+# 清华
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+# 中科大
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/msys2/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/
+
 conda config --set show_channel_urls yes
+```
+
+### pip安装模块包镜像源:
+```
+中国科技大学: https://pypi.mirrors.ustc.edu.cn/simple/
+华中科技大学: http://pypi.hustunique.com/
+山东理工大学: http://pypi.sdutlinux.org/
+阿里云: http://mirrors.aliyun.com/pypi/simple/
+清华: https://pypi.tuna.tsinghua.edu.cn/simple/
+豆瓣: http://pypi.douban.com/simple/
 ```
 
 ### Anaconda更新升级命令: 
@@ -98,5 +124,4 @@ conda config --set show_channel_urls yes
 - 注:如当前python环境版本是3.6.0,而最新版本是3.6.5,那么就会升级到3.6.5
 - 更新所有包: conda update --all
 - 更新某个包: conda update packagename
-
 
