@@ -1,4 +1,6 @@
-### 使用Django框架内置分页器Paginator封装分页实现
+### Django框架的内置分页功能:
+```
+### 使用Django框架内置分页器Paginator封装分页实现:
 ## Paginator分页器对象属性:
 # Paginator分页器对象: paginator = Paginator(all_data,num_page)  # all_data数据集,num_page每一页的数据数
 # 返回总数量: paginator.count  # 对象总数
@@ -23,7 +25,7 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 ## 分页函数: views.py
 def paging(request):
     page_num = request.GET.get('page_num',defaule=1)  # 获取url传递过来的页码数值,默认值为1,可自定义
-    all_data = Entry.objects.all()  # 数据查询结果集
+    all_data = Entity.objects.all()  # 数据查询结果集
     paginator = Paginator(all_data,3)  # 创建分页对象,设置每页显示几条数据
     try:
         pages = paginator.page(page_num)  # 获取页码值对应的分页对象
@@ -69,12 +71,12 @@ def paging(request):
 # {% if pages.has_next %}
 #   <li class="long"><a href="?page_num={{ pages.next_page_number }}">下一页</a></li>
 # {% endif %}
-
-
+```
 
 ##############################################################################################################
 ### 不使用Django框架内置分页器封装分页类实现
-### 分页显示封装类: mypage.py
+```
+分页显示封装类: mypage.py
 class Page():
     def __init__(self, page_num, total_count, url_prefix, per_page=10, max_page=11):
         """
@@ -198,9 +200,10 @@ def depts(request):
     print(ret)
     page_html = page_obj.page_html()
     return render(request, "dept.html", {"depts": ret, "page_html": page_html})		
+```
 		
-##############################################################################################################
 ### 原始分页显示
+```
 # 每一页显示多少条数据
 per_page = 10
 # 总共需要多少页码来展示
@@ -270,3 +273,5 @@ else:
 # 加最后一页
 html_str_list.append('<li><a href="/books/?page={}">尾页</a></li>'.format(total_page))
 page_html = "".join(html_str_list)
+```
+

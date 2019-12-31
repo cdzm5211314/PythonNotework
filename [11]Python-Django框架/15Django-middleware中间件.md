@@ -1,25 +1,10 @@
-# -*- coding:utf-8 -*-
-# @Desc : django项目中间件
-# @Author : Administrator
-# @Date : 2019-06-04 15:10
+### Django框架的中间件: middleware
+```
+# Django框架有默认的中间件: settings.py文件的 MIDDLEWARE = []
+# 中间件的执行顺序: 自上而下,全局操作Django项目的请求与响应
 
-# Django项目中settings.py中默认的middleware中间件:
-'''
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-'''
-
-### 自定义中间件,中间件在全局操作Django项目的请求与响应
+### 中间件类中的常用方法: 常用process_request和process_response方法
 from django.utils.deprecation import MiddlewareMixin
-
-# 1. 定义一个类,可以定义五个方法,常用有process_request和process_response方法
 class MyMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
@@ -75,41 +60,23 @@ class MyMiddleware(MiddlewareMixin):
             如果是HttpResponse对象,不执行后续中间件的process_exception方法
         """
         pass
+        
+## 注: 这五个方法的返回值可以是None或HttpResponse对象:
+# 如果是None,则按照Django定义的规则往下执行
+# 如果是HttpResponse对象,则直接将该对象返回给用户
+## 注: Django调用 注册的中间件里面的五个方法的执行顺序:
+# process_request  ---> urls.py ---> process_view ---> view.py ---> process_exception ---> process_template_response ---> process_response
 
-# 注: 这五个方法的返回值可以是None或HttpResponse对象:
-    # 如果是None,则按照Django定义的规则往下执行
-    # 如果是HttpResponse对象,则直接将该对象返回给用户
-# 注: Django调用 注册的中间件里面的五个方法的执行顺序:
-    # process_request  ---> urls.py ---> process_view ---> view.py ---> process_exception ---> process_template_response ---> process_response
-
-# 2. 在seetings.py文件的中添加自定义的中间件
-'''
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewaredemo.MyMiddleware',  # 自定义中间件
-]
-注: 中间件有从上到下的执行顺序
-'''
-
-### 自定义中间件
-## 1. 在项目工程下创建middleware目录
-## 2. 在创建的middleware目录下创建.py文件,如 mymiddleware.py
-## 3. 在创建的mymiddleware.py文件中编写中间件类,并继承MiddlewareMixin基类
-"""
+### 自定义中间步骤:
+# 1.在项目工程下创建middleware目录
+# 2.在创建的middleware目录下创建.py文件,如 mymiddleware.py
+# 3.在创建的mymiddleware.py文件中编写中间件类,并继承MiddlewareMixin基类
 from django.utils.deprecation import MiddlewareMixin
 class XxxMiddleware(MiddlewareMixin):
     '''然后根据功能需求,重写那五个函数中的某个或多个函数,如下所示'''
     def process_request(self, request):
         print("request路径: ", request.GET.path)
         print("访问服务器的IP地址: ", request.META.get("REMOTE_ADDR"))
-"""
-## 4. 启用(注册)中间件,在settings.py中进行配置,如MIDDLEWARE添加: middleware.文件名.类名
+# 4.启用(注册)中间件,在settings.py中进行配置,如MIDDLEWARE添加: middleware.文件名.类名
 # 如: middleware.mymiddleware.XxxMiddleware
-
-
+```
