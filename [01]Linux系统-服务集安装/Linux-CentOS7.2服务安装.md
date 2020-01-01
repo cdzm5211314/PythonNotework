@@ -370,7 +370,37 @@ export WORKON_HOME=/envs
 # 查看Pytho解释器位置: `pipenv --py`
 ```
 
+### 安装Git:
+* 移除旧版本: yum remove git
+* 安装依赖包:
+```
+yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel
+yum -y install gcc perl-ExtUtils-MakeMaker
+```
+* 下载安装包: wget https://www.kernel.org/pub/software/scm/git/git-2.21.1.tar.gz
+* 解压下载包: tar -xf git-2.21.1.tar.gz
+* 编译和安装: 
+```
+进入解压后的git目录：cd git-2.21.1
+./configure --prefix=/usr/local/git
+make prefix=/usr/local/git all      # 不指定路径的话默认安装在/usr/bin
+make prefix=/usr/local/git install  # 执行安装
+```
+* 配置环境变量:
+```
+编辑文件: vi ~/.bashrc ---> 添加如下内容
+export PATH=$PATH:/usr/local/git/bin 
+立即生效: source ~/.bashrc 
 
-
+```
+* 检测是否安装成功: git --version
+* Git的使用配置: GitHub
+```
+生成SSH秘钥: ssh-keygen -t rsa -C "your email address"
+生成的秘钥文件: cat root/.ssh/id_ras.pub
+添加密钥到GitHub: 点击自己的头像 ---> settings ---> SSH And GPG Keys ---> New SSH key
+将CentOS本地 id_rsa.pub 中的内容粘贴到 Key 文本框中,随意输入一个 title(不要有中文),点击 Add Key 即可
+测试验证是否成功: ssh git@github.com
+```
 
 
