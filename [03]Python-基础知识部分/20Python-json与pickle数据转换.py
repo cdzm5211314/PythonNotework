@@ -3,14 +3,34 @@
 # @Author : Administrator
 # @Date : 2019-07-18 11:27
 
+# 美化输出
+# import requests
+# from pprint import pprint  # 格式化输入内容
+# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"}
+# url = 'http://httpbin.org/get'
+# response = requests.get(url, headers=headers)
+# result = response.content.decode("utf-8")
+# print(result, type(result))  # str
+
+################################################################################################
+
 # JSON支持数据格式:
 # 1. 对象(字典),使用{}
 # 2. 数组(列表),使用[]
-# 3. 整形,浮点型,布尔类型,null类型
+# 3. 整数(int),浮点数(float),布尔(boolean)
 # 4. 字符串类型(字符串必须要用双引号,不能使用单引号)
-# 多个数据之间用哪个逗号分开,注:json本质上就是一个字符串
+# 多个数据之间用逗号分开,注:Json本质上就是一个字符串
+
+# Json: 用于各种语言之间的字符转换,对于Python语言只能对基本数据类型进行转换
+# 如: Python语言中的字典(dict),列表(list),元组(tuple),字符串(str)等基本数据类型
+# Json模块提供了四个方法: dumps()、dump()、loads()、load()
+
+# pickle: 仅支持Python语言,对于Python语言中的所有数据类型进行转换
+# pickle模块提供了四个方法：dumps()、dump()、loads()、load()
+
 
 import json
+import pickle
 
 books_dict = {
     "1":{
@@ -39,7 +59,7 @@ books_list = [
 # 字典类型数据转换成Json数据
 json_str1 = json.dumps(books_dict,ensure_ascii=False)
 # print(json_str1,type(json_str1))  # <class 'str'>
-# 字典类型数据转换成Json数据
+# 列表类型数据转换成Json数据
 json_str2 = json.dumps(books_list,ensure_ascii=False)
 # print(json_str2,type(json_str2))  # <class 'str'>
 
@@ -76,15 +96,7 @@ with open("response_list.json",encoding='utf-8') as fp:
     # print(fp_list, type(fp_list))
 
 
-
 ##########################################################################################################
-# 美化输出
-# import requests
-# from pprint import pprint  # 格式化输入内容
-# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"}
-# url = 'http://httpbin.org/get'
-# response = requests.get(url, headers=headers)
-# result = response.content.decode("utf-8")
-# print(result, type(result))  # str
+
 
 
