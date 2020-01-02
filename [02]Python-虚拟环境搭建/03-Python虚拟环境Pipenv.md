@@ -72,7 +72,7 @@ pipenv shell  # 进入虚拟环境
 # 导出: pipenv lock -r --dev > requirements.txt  # 只导出开发环境的依赖包
 
 # 导入: pip freeze -r requirements.txt
-# 导入: pipenv install -r requirements.txt  # 默安装所有依赖包到生产包环境
+# 导入: pipenv install -r requirements.txt  # 默安装所有依赖包到生产环境
 # 导入: pipenv install -r requirements.txt --dev  # 安装所有依赖包到开发环境
 ```
 
