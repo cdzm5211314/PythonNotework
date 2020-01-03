@@ -3,7 +3,7 @@
 # Django框架有默认的中间件: settings.py文件的 MIDDLEWARE = []
 # 中间件的执行顺序: 自上而下,全局操作Django项目的请求与响应
 
-### 中间件类中的常用方法: 常用process_request和process_response方法
+### 中间件的常用方法: process_request() 和 process_response()
 from django.utils.deprecation import MiddlewareMixin
 class MyMiddleware(MiddlewareMixin):
 
@@ -14,14 +14,6 @@ class MyMiddleware(MiddlewareMixin):
         返回值: None或HttpResponse对象
             如果是None,继续执行后续的中间件的process_request方法
             如果是HttpResponse对象,不执行后续的中间件的process_request方法
-        """
-        pass
-
-    def process_response(self, request, response):
-        """
-        执行顺序: 按照settings.py文件的中间件注册顺序,从下到上
-        何时执行: 请求有响应的时候
-        返回值: 必须是HttpResponse对象
         """
         pass
 
@@ -39,8 +31,15 @@ class MyMiddleware(MiddlewareMixin):
             如果是HttpResponse对象,不执行后续的中间件的process_view方法
         """
         pass
+        
+    def process_response(self, request, response):
+        """
+        执行顺序: 按照settings.py文件的中间件注册顺序,从下到上
+        何时执行: 请求有响应的时候
+        返回值: 必须是HttpResponse对象
+        """
+        pass
 
-    # process_exception方法只有在视图函数中出现异常才执行
     def process_exception(self, request, exception):
         """
         执行顺序: 按照settings.py文件的中间件注册顺序,从下到上
@@ -61,22 +60,23 @@ class MyMiddleware(MiddlewareMixin):
         """
         pass
         
-## 注: 这五个方法的返回值可以是None或HttpResponse对象:
+## 注:除了process_response()方法必须返回HttpResponse对象,其他几个方法的返回值可以是None或HttpResponse对象:
 # 如果是None,则按照Django定义的规则往下执行
 # 如果是HttpResponse对象,则直接将该对象返回给用户
 ## 注: Django调用 注册的中间件里面的五个方法的执行顺序:
 # process_request  ---> urls.py ---> process_view ---> view.py ---> process_exception ---> process_template_response ---> process_response
 
 ### 自定义中间步骤:
-# 1.在项目工程下创建middleware目录
-# 2.在创建的middleware目录下创建.py文件,如 mymiddleware.py
+# 1.在项目根目录下创建包目录,如包名称为middleware
+# 2.在创建的middleware包目录下创建.py文件,如文件名称为mymiddleware.py
 # 3.在创建的mymiddleware.py文件中编写中间件类,并继承MiddlewareMixin基类
 from django.utils.deprecation import MiddlewareMixin
 class XxxMiddleware(MiddlewareMixin):
-    '''然后根据功能需求,重写那五个函数中的某个或多个函数,如下所示'''
+    '''然后根据功能需要,重写那五个方法中的某个或多个方法,如下所示'''
     def process_request(self, request):
         print("request路径: ", request.GET.path)
         print("访问服务器的IP地址: ", request.META.get("REMOTE_ADDR"))
-# 4.启用(注册)中间件,在settings.py中进行配置,如MIDDLEWARE添加: middleware.文件名.类名
-# 如: middleware.mymiddleware.XxxMiddleware
-```
+# 4.启用(注册)中间件,在settings.py中进行配置,如MIDDLEWARE添加: 包名.文件名.类名
+# 如: 'middleware.mymiddleware.XxxMiddleware'
+
+

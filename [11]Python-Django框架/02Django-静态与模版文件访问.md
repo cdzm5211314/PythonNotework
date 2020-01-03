@@ -20,15 +20,18 @@
 # <img src="{% static 'images/a.jpg'%}">
 # <script src="{% static "mytest.js" %}"></script>
 
+# 或者如果不想每次在模版文件中加载静态文件时都使用{% load static %},那么就把static标签变成Django内置标签:
+# 在settings.py文件中属性TEMPLATES/OPTIONS同级下添加: 'builtins':['django.templatetags.static']
+
 ## 获取静态文件的前缀: {% get_static_prefix %}   ---> /static/
 # {% load static %}
 # <img src="{% get_static_prefix %}images/hi.jpg" />   ---> /static/images/hi.jpg
 
 ### 模板(Templates)的设置: 在 settings.py 中有一个 TEMPLATES 变量
 # 1. BACKEND：指定使用的模板的引擎
-# 2. DIRS: 指定模板的存放目录
+# 2. DIRS: 指定模板的存放路径
 # 2.1 如果写东西: 则按照写好的路径去找模板
-# 2.2 如果未写东西: 那么Django会自动的到每个应用中所有一个叫templates的目录来作为模板的存放目录
-# 3. APP_DIRS: 是否自动搜索应用中的目录, True：表示搜索应用中的 templates 的目录
+# 2.2 如果未写东西: 那么Django会自动的到每个应用中搜索一个叫templates的目录来作为模板的存放目录
+# 3. APP_DIRS: 是否自动搜索应用中的目录,设置为True: 表示搜索应用中的 templates 目录
 ```
 

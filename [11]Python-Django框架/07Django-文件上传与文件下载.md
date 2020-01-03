@@ -108,7 +108,8 @@ def show_image(request):
 {% for file in uploadall %} 
     <image src="/media/{{ file.im }}" />  # 显示图片
     <image src="{{ MEDIA_URL }}{{ file.im }}" />  # 显示图片
-    # 注: 使用MEDIA_URL模版上下文变量需要在settings.py文件中的变量TEMPLATES中配置如下内容
+    # 注: 使用{{ MEDIA_URL }}模版全局上下文变量需要在settings.py文件中的变量TEMPLATES中配置如下内容
+    'OPTIONS': { 'context_processors': [..., 'django.template.context_processors.media'] }
     # 'django.template.context_processors.media'
 {% endfor%} 
 ```

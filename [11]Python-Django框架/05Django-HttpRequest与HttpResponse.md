@@ -83,7 +83,7 @@ def function_view(request):
 # 响应Json数据:
 from django.http import JsonResponse            # 返回Json数据(即字典类型数据)
 def function_view(request):
-    return JsonResponse('字典数据')
+    return JsonResponse({"key": "value"})  # 字典数据
     # 默认只能传递字典类型,如果要传递非字典类型需要设置一下safe关键字参数
     # return JsonResponse('非字典数据', safe=False)
 

@@ -26,7 +26,12 @@
 # Json模块提供了四个方法: dumps()、dump()、loads()、load()
 
 # pickle: 仅支持Python语言,对于Python语言中的所有数据类型进行转换
+# 如: Python语言中的特殊数据类型: 对象等
 # pickle模块提供了四个方法：dumps()、dump()、loads()、load()
+
+# 序列化数据:(如,dumps()) Python数据 ---> 字符串
+# 反序列化数据:(如,loads()) 字符串 ---> Python数据
+
 
 
 import json

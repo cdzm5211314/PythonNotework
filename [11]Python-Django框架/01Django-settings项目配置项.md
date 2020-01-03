@@ -1,5 +1,7 @@
 ### Django项目settings.py配置文件:
 ```
+# 查看Django全局的默认配置信息: django/conf/global_settings.py
+
 # 注册应用APP配置属性:
 INSTALLED_APPS = []
 
@@ -24,9 +26,17 @@ DATABASES = {
 }
 
 # 模版文件的存储路径配置属性:
-TEMPLATES = [] 
+TEMPLATES = [
+   # 如果配置了目录,则优先按照写好的路径去找模板文件,如果找不到才会到app应用下的templates目录中查找模版文件
+   'DIRS': [os.path.join(BASE_DIR, 'templates')],
+   # 'DIRS': [ ],  # 如果未配置目录,则会自动的到每个应用中查找templates的目录来作为模板文件的存放目录
+   'APP_DIRS': True,  # 默认True表示搜索应用中的 templates 目录
+   # 如果不想每次在模版文件中加载静态文件时都使用{% load static %},那么就把static标签变成Django内置标签
+   'builtins': ['django.templatetags.static'],
+] 
 
 # 静态文件的存储路径配置信息:
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -43,8 +53,11 @@ urlpatterns = [
 ]
 
 # Admin后台管理中文设置:
-LANGUAGE_CODE = 'zh-Hans'
-TIME_ZONE = 'Asia/Shanghai'
+LANGUAGE_CODE = 'zh-Hans'       # 设置中文,默认为en-us
+TIME_ZONE = 'Asia/Shanghai'     # 设置时区,默认为UTC
+# USE_I18N = True                 # 是否启动自动翻译,默认为True
+# USE_L10N = True                 # 设置以本地格式化显示数字和时间,默认为False
+USE_TZ = False                  # 设置使用本地时间,默认为True
 
 # Pyhon脚本调用Django环境:
 # 1.加载Django项目的配置信息

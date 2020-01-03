@@ -1,5 +1,5 @@
 ### Django框架的模型层: models
-* 字段类型: models.字典类型()
+* 模型字段类型: models.字段类型()
     ```
     # 自增长字段,int类型:
         AutoField:
@@ -40,14 +40,14 @@
     ...等字段类型
     ```
     
-* 字段选项: models.字典类型(字段选项)
+* 模型字段选项: models.字典类型(字段选项)
     ```
     primary_key: 设置主键,对AutoField设置主键后,就会代替原来的自增 id 列
     max_length: 字符串最大长度
     unique=True: 字段值唯一,不允许重复,默认为Flase
     null=True: 数据库中字段允许为空,默认False
     blank=True: 在admin后台提交表单允许为空,默认Flase,当设置为True时,null属性值必须为True
-    verbose_name: 在admin后台的显示名称
+    verbose_name: 在admin后台的显示字段名称
     editable=True: 在admin后台中是否可编辑,默认为True
     default: 为字段设置默认值(数据库与admin后台)
     auto_now=True: 自动创建--->无论添加或修改,都是当前操作的时间
@@ -59,7 +59,7 @@
     ...等字段选项
     ```
     
-* 元数据: class Meta
+* 模型元数据: class Meta
     ```
     class Meta:
         db_table = "table_name"  # 指定数据库表名
@@ -205,6 +205,17 @@
         teacher = models.ForeignKey(Teacher)  # 关联另一个模型类,设置外键属性
         course = models.ForeignKey(Course)    # 关联另一个模型类,设置外键属性
     ```
+### Django定义完模型类生成数据库表:
+```
+# 生成迁移文件: python manage.py makemigrations
+# 执行迁移文件: python manage.py migrate
+
+# 注:当模型类发生变更后需要重新生成数据库表
+# 1.删除数据库表: 删除该模型类对应的数据表
+# 2.删除数据库表信息: 删除django_migrations表中关于该模型类的迁移记录信息
+# 3.删除APP应用文件: 删除./app_dir/migrations/迁移文件
+# 4.再次生成迁移文件及执行迁移文件,生成对应的模型类数据库表
+```
 
 ### Django框架ORM: 对象关系映射
 * 添加数据: 

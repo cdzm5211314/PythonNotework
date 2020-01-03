@@ -22,11 +22,17 @@ admin.site.register(Student)
 from .models import Student
 @admin.register(Student)  # 简写注册,等同于: admin.site.register(Student, StudentAdmin)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ["name", "author",deletes]  # 定制显示的列: 展示模型字段或自定义函数名称
+    list_display = ["name", "author",deletes]  # 定制显示的列: 即admin后台显示的模型字段名称或自定义函数名称
     list_display_link = ["author"]  # 定制列可以点击跳转: 点击哪个字段进入编辑页面
-    list_filter = ["author"]  # 定制右侧快速筛选栏: 根据字段过滤
-    search_fields = ["name"]  # 定制快速搜索栏:
+    list_filter = ["author"]  # 定制右侧快速过滤查询: 根据字段过滤
+    search_fields = ["name"]  # 定制快速搜索框: 根据字段搜索
+    raw_id_fields = ["关联字段"]  # 后台显示关联字段所属的信息
+    ordering = ["排序字段"]
+    list_per_page = 10  # 默认为100条
+    actions_on_top = True  # 显示顶部的选项
+    actions_on_bottom = True  # 显示底部的选项
 # admin.site.register(Student, StudentAdmin)  # 自定义方式注册模型类
+
 
 ### 定制信息字段详情:
 ## list_display : 定义在 列表页 上显示的字段们
@@ -56,5 +62,19 @@ class StudentAdmin(admin.ModelAdmin):
 #     #分组2
 #     ()
 # )
+
+
+### 编辑关联对象:
+## 在一对多的关系中，可以在一端的编辑页面中编辑多端的对象，嵌入多端对象的方式包括表格、块两种
+# 类型InlineModelAdmin：表示在模型的编辑页面嵌入关联模型的编辑
+# 子类TabularInline：以表格的形式嵌入
+# 子类StackedInline：以块的形式嵌入
+## 在app01/admin.py文件中添加如下代码：
+class AreaStackedInline(admin.StackedInline):
+    model = AreaInfo    # 关联子对象（多类对象）
+ 
+class AreaAdmin(admin.ModelAdmin):
+    inlines = [AreaStackedInline]
 ```
+
 
