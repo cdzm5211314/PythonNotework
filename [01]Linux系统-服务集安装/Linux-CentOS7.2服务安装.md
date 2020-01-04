@@ -255,7 +255,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
 ### Python3.6.5安装:
 - 下载压缩文件解压,并进入到解压目录
 ```
-wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
+wget https://www.python.org/ftp/python/3.7.2/Python-3.7.2.tgz
 tar -xf Python-3.6.5.tgz
 cd ./Python-3.6.5
 ```
