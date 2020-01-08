@@ -4,13 +4,14 @@
 # @Date : 2020-01-02 14:09
 
 
-### 自定义模版全局上下文步骤:
+### 自定义模版全局上下文步骤:  实现数据的共享
 
 ## 1. 在APP应用下创建.py文件,名称任意,如: my_content_processor.py
 
 ## 2. 在my_content_processor.py文件中定义功能函数
 # def functiondemo(request):
-#     return {"key":"value"}
+
+#     return {"key":"value"}  # 以字典的数据形式返回
 
 ## 3. 在settings.py文件中配置函数路径
 # TEMPLATES = [
@@ -33,14 +34,8 @@
 #     },
 # ]
 
-## 4. urls.py文件
-# url(r'^func/$', views.getfunc, name="func")
 
-## 5.views.py文件
-# def getfunc(request):
-#     return render(request,'func.html')
-
-## 6.func.html文件,每个被访问的.html文件都能获取这个值
+## 4.func.html文件,每个被访问的.html文件都能获取这个值
 # {{ key }}
 
 

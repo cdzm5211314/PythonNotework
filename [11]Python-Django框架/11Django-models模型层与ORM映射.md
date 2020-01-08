@@ -369,13 +369,13 @@
             
         # 第二种不包含主键:
             # 若你同时使用不止一个数据库,你可以使用 django.db.connections 获取指定数据库的连接(和指针)
-            # from django.db import connections 是一个类字典对象,它允许你通过连接别名获取指定数据库连接
-            # 如: connections['my_db_alias'].cursor()
+            # 1. from django.db import connections 是一个类字典对象,它允许你通过连接别名获取指定数据库连接
+            # 2. 如: connections['my_db_alias'].cursor()
             
-            from django.db import connection  # 代表默认数据库连接
-            cursor = connection.cursor()  # 获取指针对象
-            # 1.调用 cursor.execute(sql, [params]) 方法执行该SQL语句
-            # 2.调用 cursor.fetchone() 或 cursor.fetchall() 方法获取结果数据
+            from django.db import connection  # 1.代表默认数据库连接
+            cursor = connection.cursor()  # 2.获取指针对象
+            # 3.调用   方法执行该SQL语句
+            # 4.调用 cursor.fetchone() 或 cursor.fetchall() 方法获取结果数据
         ```
         
     * ForeignKey查询: 多表查询
