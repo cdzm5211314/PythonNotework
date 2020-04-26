@@ -17,12 +17,14 @@ class Person(object):
         self.__addr = "北京"  # 对象的私有属性
 
     # 定义公有的set和get方法
-    # set
+    # set 设置私有属性值
     def setAddr(self,addr):
+    # def set_addr(self, addr):
         self.__addr = addr
 
-    # get
+    # get 获取私有属性值
     def getAddr(self):
+    # def get_addr(self):
         return self.__addr
 
     def _sayAge(self):  # 受保护的
@@ -44,7 +46,16 @@ p = Person("lisi")
 # print(Person.__country)        # 类不能在外部直接访问类的私有属性
 # print(Person._age)             # 类不能在外部直接访问对象的受保护属性
 # print(Person.__addr)           # 类不能在外部直接访问对象的私有属性
-# print(Person._sayAge())        # 类可以能在外部直接访问对象的受保护方法,但需要一个对象参数
-# print(Person.___secrecyWork)   # 对象不能在外部直接访问对象的私有方法
+# print(Person._sayAge())        # 类能在外部直接访问对象的受保护方法,但需要一个对象参数
+# print(Person.___secrecyWork()) # 类不能在外部直接访问对象的私有方法
 
 
+## 子类无法继承父类的私有属性和私有方法
+## 对象不能在外部直接访问(或调用)对象私有属性(或对象私有方法)
+## 类名不能在外部直接访问(或调用)对象私有属性(或对象私有方法)
+
+## 对象可以在外部直接访问(或调用)对象受保护属性(或对象受保护方法)
+## 类名不能在外部直接访问(或调用)对象受保护属性(或对象受保护方法)
+
+# 对象不能在外部直接访问私有类属性
+# 类名不能在外部直接调用私有类属性

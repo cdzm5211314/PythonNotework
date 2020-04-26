@@ -34,3 +34,9 @@ class DD(BB,CC):
 
 d = DD()
 d.test()
+
+
+# 查看类继承顺序: 类名.__mro__
+print(DD.__mro__)
+
+

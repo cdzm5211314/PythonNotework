@@ -9,8 +9,7 @@ class Circle:
 
     def __init__(self,radius): # 圆的半径: radius
         self.radius = radius
-        self.__pi = 3.14
-
+        self.__pi = 3.14  # 私有属性
 
     # 先有getxxx
     @property  # get
@@ -38,10 +37,17 @@ c = Circle(5)
 
 print(c.pi)
 c.pi = 5.14
-print(c.pi)
-print()
+print(c.pi)                 # 对象可以在外部直接访问特殊属性
+print(Circle.pi)            # 类名不能在外部直接访问特殊属性
 print(c.area)
 print(c.perimeter)
-print(c.spam(10,20))        # 对象能直接在外部访问静态方法
-print(Circle.spam(30,20))   # 类能直接在外部访问静态方法
+print(c.spam(10,20))        # 对象可以在外部直接调用静态方法
+print(Circle.spam(30,20))   # 类名可以在外部直接调用静态方法
+
+
+## 对象可以在外部直接调用静态方法
+## 类名可以在外部直接调用静态方法
+
+## 对象可以在外部直接访问特殊属性
+## 类名不能在外部直接访问特殊属性
 

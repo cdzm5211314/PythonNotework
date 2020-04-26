@@ -19,3 +19,42 @@ print('2 + 3 =', func2(2, 3))
 # 2.当lambda表达式调用时，先执行冒号后(:)的表达式，并返回表达式的结果的引用
 # 3.lambda 表达式创建的函数只能包含一条"表达式"
 
+
+## lambda 函数的参数形式:
+# 1.无参数:
+fn = lambda: 100
+print(fn())
+# 2.一个参数:
+fn = lambda a: a
+print(fn("Hello"))
+# 3.默认参数:
+fn = lambda a, b, c=100: a + b + c
+print(fn(10,50))
+print(fn(10,50,80))
+# 4.可变参数(*args和**kwargs):
+fn = lambda *args: args
+print(fn(2,4,6))  # (2, 4, 6)
+fn = lambda **kwargs: kwargs
+print(fn(name="Tom", age=5))  # {'name': 'Tom', 'age': 5}
+# 5.带判断的lambda函数
+fn = lambda a, b: a if a>b else b
+print(fn(3,5))  # 5
+print(fn(8,6))  # 8
+
+
+# 列表数据按字典key的值进行排序
+stu = [
+    {"name":"Tom", "age":12},
+    {"name":"Jack", "age": 22},
+    {"name":"Rose", "age":18},
+]
+
+# 按name值升序排序
+stu.sort(key=lambda x: x["name"])
+print(stu)
+# [{'name': 'Jack', 'age': 22}, {'name': 'Rose', 'age': 18}, {'name': 'Tom', 'age': 12}]
+# 按name值降序排序
+stu.sort(key=lambda x: x["name"], reverse=True)
+print(stu)
+# [{'name': 'Tom', 'age': 12}, {'name': 'Rose', 'age': 18}, {'name': 'Jack', 'age': 22}]
+

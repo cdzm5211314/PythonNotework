@@ -55,4 +55,17 @@
 # s2 = s.join(L)  # s2 = b'C:\Programe files\python3'
 
 
+# 列表数据按字典key的值进行排序
+stu = [
+    {"name":"Tom", "age":12},
+    {"name":"Jack", "age": 22},
+    {"name":"Rose", "age":18},
+]
+
+# 按name值升序排序
+stu.sort(key=lambda x: x["name"])
+print(stu)
+# 按name值降序排序
+stu.sort(key=lambda x: x["name"], reverse=True)
+print(stu)
 

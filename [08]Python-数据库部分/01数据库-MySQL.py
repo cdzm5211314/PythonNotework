@@ -47,7 +47,7 @@
 
 # ********************************************************************* #
 
-### DDL(数据操作语言): 如 create ,alert ,drop
+### DDL(数据定义语言): 如 create(建库,建表),drop(删库,删表),alert(更改表结构)
 # 创建数据库: create database 数据库名称;
 # 删除数据库: drop database 数据库名称;
 # 进入数据库: use 数据库名称;
@@ -70,7 +70,7 @@
 # 如: alert table test_table drop sex;
 # 删除表: drop table 表名;
 
-### DML(数据操作语言): 如 insert ,update ,delete
+### DML(数据操纵语言): 如 insert,delete,update
 ## 插入数据:
 # 所有字段插入数据:  insert into 表名 values(...);
 # 插入某些字段数据: insert into 表名(列名1,列名2) values(值1,值2)
