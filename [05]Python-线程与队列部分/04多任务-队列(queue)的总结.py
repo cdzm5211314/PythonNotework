@@ -8,6 +8,7 @@
 # LifoQueue: FIFO后入先出
 # PriorityQueue: 优先级
 
+from queue import Queue
 
 ## 队列对象方法: Queue(maxsize) - 创建一个先进先出的队列
 # Queue.qsize()                                 返回队列的大小
