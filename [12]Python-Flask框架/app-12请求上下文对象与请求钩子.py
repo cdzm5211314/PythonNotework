@@ -3,31 +3,35 @@
 # @Author : Administrator
 # @Date : 2019-09-14 13:13
 
-# 请求上下文对象: request session
-# 应用上下文对象: current_app g
-# g: 处理请求时,用于临时存储的对象,每次请求都会重设这个变量
 
-# 请求钩子是通过装饰器的形式实现,Flask支持如下四种请求钩子:
+## 请求上下文对象: request、session
+# 保存了客户端和服务器交互的数据
+
+## 应用上下文对象: current_app、g
+# flask应用程序运行过程中,保存的一些配置信息,比如程序名、数据库连接、应用信息等
+# 注: g处理请求时,用于临时存储的对象,每次请求都会重设这个变量
+
+
+## 请求钩子是通过装饰器的形式实现,Flask支持如下四种请求钩子:
+# 钩子的理解: 可以相似于Django框架中的中间件
 # before_first_request: 在处理第一个请求前运行
 # before_request: 在每次请求前运行
 # after_request(response): 如果没有未处理的异常抛出,在每次请求后运行
 # teardown_request(response): 在每次请求后运行,即使有未处理的异常抛出
 
-# 钩子的理解: 可以相当于Django框架中的中间件
 
 from flask import Flask, request, url_for
 
 app = Flask(__name__)
 
 
-@app.route('/index')
+@app.route('/index/')
 def index():
     print('index 被执行')
     num = 1 / 0
     return 'index page'
 
-
-@app.route('/hello')
+@app.route('/hello/')
 def hello():
     print('hello 被执行')
     return 'hello page'

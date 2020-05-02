@@ -3,6 +3,8 @@
 # @Author : Administrator
 # @Date : 2019-09-14 13:13
 
+
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -46,10 +48,43 @@ if __name__ == '__main__':
 
 # 模版中使用变量及过滤器
 '''
+## 模版处理分为两个过程:
+# 加载
+# 渲染
+
+## 模版代码包含两个部分:
+# 静态HTML
+# 动态插入的代码段
+
+## 模版语法主要分为两种:
+# 变量: {{ var }}
+# 标签: {% tag %}
+
+## 结构标签:
+# {% extends 'xxx.html' %}  继承模版
+# {% block xxx %} 块操作(父模版挖坑,子模版填坑,默认填坑会覆盖所有内容) {% endblock %}
+# 注: 首次出现挖坑,非首次出现填坑,多次填坑会出现覆盖,不想覆盖就使用{{ super() }}
+# {{ super() }}  不想覆盖填坑中的内容
+# {% include 'xxx.html' %}  包含,将其他html文件包含进来,体现的是由零到整的概念
+# 注: 能用 block + extends 实现的,就尽量不要使用include
+# {% marco test(name) %} {{ name }} {% endmarco %}  宏定义,可以在模版中定义函数(可接受参数),在其他地方调用
+# 宏定义调用: {{ test("flask") }}
+# 宏定义导入: {% from 'XXX.html' import xxx %}
+
+## for循环:
+{% for temp in lis %}
+    aaa
+{% else %}
+    bbb
+{% endfor %}
+
+
+## 加载静态文件:
+# 如: <link rel="stylesheet" href="{{ url_for('static', filename='css/mine.css') }}" />
+
 <p>模版中使用视图函数传递过来变量</p>
 
 <p>变量name = {{ course }}</p>
-
 <p>变量name = {{ name }}</p>
 <p>变量name = {{ age }}</p>
 

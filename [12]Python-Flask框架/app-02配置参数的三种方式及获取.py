@@ -11,6 +11,7 @@ app = Flask(__name__)
 # Flask配置参数(三种方式): 即相当于Django框架中的settings.py文件中的配置信息
 # 第一种方式: 使用创建文件配置参数,如 config.cfg
 # app.config.from_pyfile('config.cfg')  # 使用配置文件的相对路径,以当前文件的所在目录为总目录
+# 如: DEBUG = True
 
 # 第二种方式(常用): 使用创建类配置参数,如 Config
 class Config(object):

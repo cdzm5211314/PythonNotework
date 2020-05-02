@@ -72,11 +72,11 @@ if __name__ == '__main__':
     manager.run()
 
 
-#############################################################################################################
+#############################################################################################
 # 终端命令操作:
-# 创建迁移仓库(初始化): python xxx.py db init
-# 创建迁移文件: python xxx.py db migrate   ---> 相当于Django中的: python manage.py makemigrations
-# 更新数据库: python xxx.py db upgrade     ---> 相当于Django中的: python manage.py migrate
+# 创建迁移仓库(初始化): python xxx.py db init  ---> 仅可调用一次
+# 生成迁移文件: python xxx.py db migrate  ---> 相当于Django中的: python manage.py makemigrations
+# 生成数据库表: python xxx.py db upgrade  ---> 相当于Django中的: python manage.py migrate
 # 如: python xxx.py db upgrade -m '此次操作的说明信息'
 # 回退数据库: python xxx.py db downgrade '回退的版本号(查看历史记录)'
 # 查看历史记录: python xxx.py db history

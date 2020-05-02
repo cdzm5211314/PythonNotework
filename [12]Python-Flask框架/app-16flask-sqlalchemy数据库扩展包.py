@@ -29,16 +29,17 @@ class Config(object):
     # form表单需要配置secret_key信息,form表单需要添加csrf_token
     SECRET_KEY = "FlaskTest"
 
-
 app.config.from_object(Config)
 
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@host:port/datebase?charset=utf8'
 # 创建数据库SQLAlchemy工具对象
 db = SQLAlchemy(app)
 
 
-# 数据库表名的常见规范
+## 数据库表名的常见规范
 # ihome -> ih_user  数据库名缩写_表名
 # tbl_user  tbl_表名
+
 
 # 定义数据库模型类
 class User(db.Model):
@@ -68,8 +69,8 @@ class Role(db.Model):
 
 if __name__ == '__main__':
     # 原始方法: 通过db(SQLAlchemy工具对象)操作数据库
-    db.drop_all()  # 清楚数据库里面的所有数据(一般在第一次使用时操作)
-    db.create_all()  # 创建所有的表
+    db.drop_all()    # 清除数据库表的所有数据(一般在第一次使用时操作)
+    db.create_all()  # 创建模型类所对应的数据库表
 
     # 1.数据库表添加数据
     role1 = Role(name='admin')
@@ -100,18 +101,18 @@ if __name__ == '__main__':
     User.query.filter_by(name='wang').first()   # 查询表中name字段值为'wang'的第一条数据,返回一个对象
     User.query.filter_by(User.name.endswith('g')).all()  # 查询表中名字结尾为'g'的所有数据,返回一个对象列表
 
-    # 逻辑非，返回名字不等于wang的所有数据
+    # 逻辑非,返回名字不等于wang的所有数据
     User.query.filter(User.name != 'wang').all()
 
-    # 逻辑与，返回名字不等于wang并且邮箱是以'163.com'结尾的所有数据
+    # 逻辑与,返回名字不等于wang并且邮箱是以'163.com'结尾的所有数据
     from sqlalchemy import and_
     User.query.filter(and_(User.name != 'wang', User.email.endswith('163.com'))).all()
 
-    # 逻辑或，返回名字不等于wang或者邮箱是以'163.com'结尾的所有数据
+    # 逻辑或,返回名字不等于wang或者邮箱是以'163.com'结尾的所有数据
     from sqlalchemy import or_
     User.query.filter(or_(User.name != 'wang', User.email.endswith('163.com'))).all()
 
-    # 逻辑取反，返回名字不等于'chen'的所有数据
+    # 逻辑取反,返回名字不等于'chen'的所有数据
     from sqlalchemy import not_
     User.query.filter(not_(User.name == 'chen')).all()
 
