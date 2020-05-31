@@ -61,16 +61,18 @@
 # ----------------------------------------------------------------------------------------- #
 
 ## 高阶函数需满足下列任意条件:
-# 1.函数接受一个或多个函数名作为参数传入
+# 1.函数的参数接受一个或多个函数名作为实参
 # 2.函数的返回值为一个函数的函数名
-# 示例如下:
+## 示例如下:
+# 普通函数
 # def func1():
 #     print("func1 函数...")
+# 高阶函数
 # def func(func1):
 #     return func1
 # res = func(func1)  # ---> 调用func函数,返回一个函数名为func1的内存地址
+# print(res)  # 返回一个函数的内存地址
 # res()  # ---> 实际是调用func1函数
-# print(res)
 
 # ----------------------------------------------------------------------------------------- #
 
@@ -106,22 +108,14 @@ print(" ----- 闭包函数的特点(好处)演示 ----- end ")
 
 # ----------------------------------------------------------------------------------------- #
 
-### 装饰器(decorators): 函数装饰器是指装饰的是一个函数，传入的是一个函数，返回的也是一个函数的函数
+### 装饰器(decorators):
+# 函数装饰器是指装饰的是一个函数,传入的是一个函数名,返回的也是一个函数的函数名
 ## 装饰器原则：
 # 1.不修改被修饰函数的源代码
 # 2.不修改被修饰函数的调用方式
+# 3.满足1,2的情况下给程序增加功能
 
-## 装饰器实现：装饰器 = 高阶函数 + 函数嵌套 + 闭包
-
-## 函数装饰器的语法:
-# def 装饰器函数名(参数):
-#     语句块
-#     return 函数对象
-
-## 被装饰函数的语法
-# @装饰器函数名
-# def 函数名(形参列表):
-#     语句块
+## 装饰器实现：装饰器 = 高阶函数 + 闭包
 
 # 注: 多层装饰器,首先执行离被装饰函数最近的那个装饰器函数
 
@@ -144,7 +138,7 @@ def demo():
 # 调用被装饰的函数    
 demo()
 
-# 函数的执行顺序
+## 函数的执行顺序
 1. Python解释器从上往下执行程序,此示例先加载函数
 2. 当出现@decorate时,Python解释器底层就会执行装饰器函数(decorate)
 3. 将被装饰函数(demo)作为参数传递给装饰器函数(decorate)的形参(func) ---> func = demo
@@ -179,6 +173,7 @@ def decorate(func):
         result = func(*args, **kwargs)
         return result
     return wrapper
+
 @decorate
 def demo1():
     return "被装饰函数demo1..."
@@ -188,63 +183,175 @@ def demo2(s):
 @decorate
 def demo3(name="lisi"):
     return "被装饰函数demo3..."
+
 res1 = demo1()
 res2 = demo2("zhangsan")
 res3 = demo3(name="wangwu")
 
 
 ############################################################################################
-## 装饰器示例如下: 无参数
-# 定义装饰器：功能 - 查看源程序函数demo的运行时间
-def decorate(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        res = func(*args, **kwargs)
-        stop_time = time.time()
-        print("demo函数的运行时间：%s"%(stop_time - start_time))
-        return res
-    return wrapper
-
-# 源程序代码函数demo
-@decorate
-def demo():
-    time.sleep(2)
-    print("demo函数执行完毕...")
-    return "源程序函数demo"
-s = demo()
-print(s)  # 源程序函数demo
-
-
-## 装饰器示例如下: 有参数
-# 定义装饰器：功能 - 查看源程序函数demo的运行时间
-# 为装饰器传递一个参数，只需要在最外层在创建一个函数,并返回一个函数名
-def param(p_type):
-    def decorate(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            print("装饰器参数：%s" %p_type )
-            start_time = time.time()
-            res = func(*args, **kwargs)
-            stop_time = time.time()
-            print("demo函数的运行时间：%s"%(stop_time - start_time))
-            return res
-        return wrapper
-    return decorate
-
-# 源程序代码函数demo
-@param(p_type = "param")
-def demo():
-    time.sleep(2)
-    print("demo函数执行完毕...")
-    return "源程序函数demo"
-s = demo()
-print(s)  # 源程序函数demo
-
 """
 带参数的装饰器有三层:
 最外层(第一层)的函数负责接收装饰器参数, 返回的是第二层函数
 中间层(第二层)的函数负责接收被装饰的函数, 返回的是第三层函数
 最内层(第三层)的函数负责接收被装饰的函数的参数, 执行被装饰的函数
 """
+## 装饰器示例如下: 被装饰函数 - 无参数,无返回值
+# 定义装饰器：功能 - 查看函数demo的运行时间
+# 装饰器函数: 无参数
+def decorate(func):
+    def wrapper():
+        import time
+        start_time = time.time()
+        func()
+        stop_time = time.time()
+        print("被装饰函数'demo'运行时间：%s" % (stop_time - start_time))
+    return wrapper
+
+# 被装饰的函数
+@decorate  # 相当于: demo = decorate(demo) 即 demo = wrapper
+def demo():
+    for i in range(100000):
+        pass
+    print("被装饰函数'demo'执行完毕...")
+
+# 调用被装饰的函数
+demo()
+
+
+## 装饰器示例如下: 被装饰函数 - 有参数,无返回值
+# 定义装饰器：功能 - 查看函数demo的运行时间
+# 装饰器函数: 无参数
+def decorate(func):
+    def wrapper(x, y):
+        print("装饰器参数: [x = %s], [y = %s]" %(x, y))
+        start_time = time.time()
+        func(x, y)
+        stop_time = time.time()
+        print("被装饰函数'demo'运行时间：%s" % (stop_time - start_time))
+    return wrapper
+
+# 被装饰的函数
+@decorate  # 相当于: demo = decorate(demo) 即 demo = wrapper
+def demo(a, b):
+    for i in range(100000):
+        pass
+    print("被装饰函数'demo'执行完毕... %s" %(a + b))
+
+# 调用被装饰的函数
+demo(2, 5)
+
+
+## 装饰器示例如下: 被装饰函数 - 不定长参数,无返回值
+# 定义装饰器：功能 - 查看函数demo的运行时间
+# 装饰器函数: 无参数
+def decorate(func):
+    def wrapper(*args, **kwargs):
+        print("装饰器参数: [x = %s], [y = %s]" %(args, kwargs))
+        start_time = time.time()
+        # func(args, kwargs)  # 错误:相当于传递两个参数,一个元组,一个字典
+        func(*args, **kwargs)  # 对传递的参数进行拆包
+        stop_time = time.time()
+        print("被装饰函数'demo'运行时间：%s" % (stop_time - start_time))
+    return wrapper
+
+# 被装饰的函数
+@decorate  # 相当于: demo = decorate(demo) 即 demo = wrapper
+def demo(*args, **kwargs):
+    for i in range(100000):
+        pass
+    print("被装饰函数'demo'元组参数: ", args)
+    print("被装饰函数'demo'字典参数: ", kwargs)
+    print("被装饰函数'demo'执行完毕...")
+
+# 调用被装饰的函数
+demo(2, 3, name="张三", age=18)
+
+
+## 装饰器示例如下: 被装饰函数 - 不定长参数,有返回值
+# 定义装饰器：功能 - 查看函数demo的运行时间
+# 装饰器函数: 无参数
+def decorate(func):
+    def wrapper(*args, **kwargs):
+        print("装饰器参数: [x = %s], [y = %s]" %(args, kwargs))
+        start_time = time.time()
+        # func(args, kwargs)  # 错误:相当于传递两个参数,一个元组,一个字典
+        result = func(*args, **kwargs)  # 对传递的参数进行拆包
+        stop_time = time.time()
+        print("被装饰函数'demo'运行时间：%s" % (stop_time - start_time))
+        return result
+    return wrapper
+
+# 被装饰的函数
+@decorate  # 相当于: demo = decorate(demo) 即 demo = wrapper
+def demo(*args, **kwargs):
+    for i in range(100000):
+        pass
+    print("被装饰函数'demo'元组参数: ", args)
+    print("被装饰函数'demo'字典参数: ", kwargs)
+    print("被装饰函数'demo'执行完毕...")
+    return "success"
+
+# 调用被装饰的函数
+result = demo(2, 3, name="张三", age=18)
+print(result)
+
+
+## 装饰器示例如下: 被装饰函数 - 不定长参数,有返回值
+# 定义装饰器：功能 - 查看函数demo的运行时间
+# 装饰器函数: 带参数
+# 注: 需要在装饰器函数外面新建一个函数,用来接收装饰器参数
+def param_func(param):
+    def decorate(func):
+        def wrapper(*args, **kwargs):
+            if param == "china":
+                print("你好")
+            elif param == "america":
+                print("hello")
+            else:
+                return
+            # return func(args, kwargs)  # 错误:相当于传递两个参数,一个元组,一个字典
+            return func(*args, **kwargs)  # 对传递的参数进行拆包
+        return wrapper
+    return decorate
+
+# 被装饰的函数
+@param_func("china")
+def demo1(*args, **kwargs):
+    print("被装饰函数'demo1': 我来自中国")
+
+# 被装饰的函数
+@param_func("america")
+def demo2(*args, **kwargs):
+    print("被装饰函数'demo2': I am from America")
+
+# 调用被装饰的函数
+demo1()
+print("*" * 30)
+demo2()
+
+## 注: 多个装饰器对同一个函数进行装饰时,最上方装饰器最后执行
+
+
+############################################################################################
+## 类装饰器
+class Test():
+
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        print("装饰器添加的额外功能...")
+        return self.func()
+
+# 被装饰的函数
+@Test  # 相当于: demo = Test(demo) 即 Test()
+def demo():
+    print("被装饰函数'demo'执行完毕...")
+    return "success"
+
+# 调用被装饰的函数
+result = demo()
+print(result)
+
 
