@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-字符串与日期</title>
+		
+		<script type="text/javascript" charset="UTF-8">
+		
+			// JavaScipt - 字符串
+			var str1 = "abc";
+			var str2 = new String("def");
+			document.write(str1 + "<br />");
+			document.write(str2 + "<br />");
+			
+			
+			// JavaScipt - 日期
+			var date = new Date();
+			// 获取年月日
+			document.write(date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDay() + "<br />");
+			// 获取时分秒
+			document.write(date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "<br />");
+			
+			
+			// 函数每隔一秒执行一次
+			function times(){
+				location.reload();
+//				var date = new Date();
+//				document.write("<span>" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDay() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "</span>" + "<br />");
+			}
+			var date = new Date();
+			document.write("<span>" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDay() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "</span>" + "<br />");
+			
+			// 定时间隔多长时间执行一次代码
+			var s = setInterval(times, 1000);
+			
+			function stops(){
+				// 停止执行setInterval()方法执行的代码
+				clearInterval(s);
+			}
+			
+			function goon(){
+				setInterval(times, 1000);
+			}
+			
+			
+			
+			
+			document.write("<br />");
+			
+		</script>
+		
+		
+	</head>
+	<body>
+
+
+	<button onclick="stops();">停止当前时间</button>
+	<button onclick="goon();">继续当前时间</button>
+
+	</body>
+	
+</html>
+
+

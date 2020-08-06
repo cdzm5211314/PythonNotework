@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-DOM之添加与删除</title>
+		
+		<!--
+			添加新的HTML内容:
+				append(): 在被选元素的内部的结尾插入内容(追加)
+				prepend(): 在被选元素的内部的开头插入内容
+				after(): 在被选元素的外部之后插入内容
+				befor(): 在被选元素的外部之前插入内容
+			删除HTML内容:
+				remove(): 删除被选元素以及子元素
+				empty():  删除被选元素下的子元素
+		-->
+		
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		
+	</head>
+	<body>
+		
+		<p id="p1">p标签一内容</p>
+		<p id="p2">p标签二内容</p>
+		<p id="p3">p标签三内容</p>
+		<p id="p4">p标签四内容</p>
+		
+		<div id="div1">
+			<p class="clazz1">p标签五内容</p>
+			<p class="clazz1"><a href="#">a标签一内容</a></p>
+		</div>
+		<div id="div2">
+			<p>p标签六内容</p>
+			<p><a href="#">a标签二内容</a></p>
+		</div>
+		
+		<hr />
+		<button id="btu1">结尾添加内容</button>
+		<button id="btu2">开头添加内容</button>
+		<button id="btu3">之前添加内容</button>
+		<button id="btu4">之后添加内容</button><br />
+		
+		<button id="btu5">删除父元素以及子元素</button>
+		<button id="btu6">删除父元素下的子元素</button>
+		
+		<script type="text/javascript" charset="UTF-8">
+
+		$(function(){
+			
+			// append() 被选元素的内部结尾添加内容
+			$("#btu1").click(function(){
+				$("#p1").append(",这是追加的内容");
+			});
+			
+			// prepend() 被选元素的内部开头添加内容
+			$("#btu2").click(function(){
+				$("#p2").prepend("这是新添加的开头内容,");
+			});
+			
+			// before() 被选元素的外部之前添加内容
+			$("#btu3").click(function(){
+				$("#p3").before("<span>这是新添加的span标签</span>");
+			});
+			
+			// after() 被选元素的外部之后添加内容
+			$("#btu4").click(function(){
+				$("#p4").after("<h3>这是新添加的h3标签</h3>");
+			});			
+			
+			// remove() 直接删除整个选中的元素
+			$("#btu5").click(function(){
+				// 删除整个元素
+//				$("#div1").remove();
+				// 删除p元素有class=clazz1的元素
+				$("p").remove(".clazz1");
+			});				
+
+			// empty() 置空;删除选中元素的内部内容
+			$("#btu6").click(function(){
+				$("#div2").empty();
+			});	
+			
+		});
+
+
+
+		</script>
+
+	</body>
+	
+</html>
+
+

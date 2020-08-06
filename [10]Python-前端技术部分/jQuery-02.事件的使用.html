@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-事件</title>
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		
+	</head>
+	<body>
+		
+		<p id="p1">p1标签内容</p>
+		<p id="p2">p2标签内容</p>
+		
+		<p id="p3">点击鼠标,松手与不松手</p>
+		
+		<input type="text" id="user" name="username"/>
+		
+
+		<script type="text/javascript" charset="UTF-8">
+
+			$(function(){
+				// jQuery - 单击事件: click()
+				$("p").click(function(){
+					// 所有p标签的样式都会发生变化
+//					$("p").css("font-size","50px");
+					// 点击哪个标签就会变化哪个标签的样式
+					$(this).css("font-size","50px");
+				});
+				
+				// jQuery - 双击事件: dbclick()
+				$("p").dblclick(function(){
+					// 点击哪个标签就会变化哪个标签的样式
+					$(this).css({"color":"red", "font-size":"30px"});
+				});
+				
+				// 注: mouseover一般和mouseout承兑出现
+				// jQuery - 鼠标悬浮事件: mouseover()
+//				$("p").mouseover(function(){
+//					// 点击哪个标签就会变化哪个标签的样式
+//					$(this).css({"color":"blue", "font-family":"华文彩云"});
+//				});
+//				// jQuery - 鼠标移除事件: mouseout()
+//				$("p").mouseout(function(){
+//					// 点击哪个标签就会变化哪个标签的样式
+//					$(this).css({"color":"green", "font-family":"隶属"});
+//				});
+				
+				// jQuery - 鼠标(悬浮与移除)事件: hover(over, out) 等同于mouseover()和mouseout()
+				$("p").hover(function(){
+					// 鼠标悬浮的样式
+					$(this).css({"color":"blue", "font-family":"华文彩云"});
+				}, function(){
+					// 鼠标移除的样式
+					$(this).css({"color":"green", "font-family":"隶属"});
+				});
+				
+				// jQuery - 鼠标点击不松手事件: mousedown()
+				$("#p3").mousedown(function(){
+					$(this).text("点击,没有松手");
+				});
+				// jQuery - 鼠标点击松手事件: mouseup()
+				$("#p3").mouseup(function(){
+					$(this).text("点击,松手了啊");
+				});
+				
+				// jQuery - 获取焦点/失去焦点事件: hocus()/blur()
+				$("input").focus(function(){
+					$(this).css("background-color", "#FF0000");
+				}).blur(function(){
+					$(this).css("background-color", "#483D8B");
+				});
+				
+				
+			});
+
+
+
+		</script>
+
+	</body>
+	
+</html>
+
+

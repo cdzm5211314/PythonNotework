@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-动画效果</title>
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		
+	</head>
+	<body>
+		
+		<img id="img1" src="img/bq0000.jpg" height="200px" width="250px"/>
+		<img id="img2" src="img/bq00001.gif" height="200px" width="250px"/><br>
+		<img id="img3" src="img/bq00002.jpg" height="300px" width="350px"/><br>
+		
+		<button id="btu1">隐藏图片</button>
+		<button id="btu2">显示图片</button>
+		<button id="btu3">隐藏/显示</button><br />
+		<button id="btu4">淡出</button>
+		<button id="btu5">淡入</button>
+		<button id="btu6">淡出/淡入</button><br />
+		<button id="btu7">变透明了</button>
+		<button id="btu8">变回来了</button><br />
+		<button id="btu9">上滑</button>
+		<button id="btu10">下滑</button>
+		<button id="btu11">上滑/下滑</button><br />
+		<button id="btu12">链式组合</button><br />
+		
+		
+		<script type="text/javascript" charset="UTF-8">
+
+			$(function(){
+				// jQuery-动画效果: 隐藏与显示
+				$("#btu1").click(function(){
+					// 隐藏图片
+					// $("img").hide();
+					// 体现效果的时间(单位毫秒),回调函数
+					$("img").hide(3000, function(){
+						alert("我被隐藏了")
+					});
+				});
+				
+				$("#btu2").click(function(){
+					// 显示图片
+					// $("img").show();
+					// 体现效果的时间(单位毫秒),回调函数
+					$("img").show(5000, function(){
+						alert("我又显示了");
+					});
+				});		
+				
+				$("#btu3").click(function(){
+					// 隐藏/显示; 判断选中的标签的状态
+					// 如果是hide就改成show
+					// 如果是show就改成hide
+					 $("img").toggle();
+					// 体现效果的时间(单位毫秒),回调函数
+					$("img").toggle(3000, function(){
+						alert("显示/隐藏");
+					});
+				});		
+				
+				
+				// jQuery-动画效果: 淡出与淡入
+				$("#btu4").click(function(){
+					// 淡出
+					$("#img1").fadeOut(1000);
+				});	
+				
+				$("#btu5").click(function(){
+					// 淡入
+					$("#img1").fadeIn(1000);
+				});					
+				
+				$("#btu6").click(function(){
+					// 淡出/淡入
+					$("#img1").fadeToggle(1000);
+				});					
+				
+				
+				// jQuery-动画效果: 变透明
+				$("#btu7").click(function(){
+					// 变透明; 时间毫秒,透明度,回调函数
+					$("#img2").fadeTo(2000, 0.3, function(){
+						alert("变透明了")
+					});
+				});	
+				$("#btu8").click(function(){
+					// 变透明
+					$("#img2").fadeTo(2000, 1, function(){
+						alert("变回来了")
+					});
+				});	
+				
+				
+				// jQuery-动画效果: 上下滑动
+				$("#btu9").click(function(){
+					// 上滑
+					$("#img3").slideUp(5000);
+				});					
+				$("#btu10").click(function(){
+					// 下滑
+					$("#img3").slideDown(5000);
+				});					
+				$("#btu11").click(function(){
+					// 上下滑
+					$("#img3").slideToggle(5000);
+				});					
+				
+				
+				// jQuery-动画效果: 事件链式组合
+				$("#btu12").click(function(){
+					// 事件链式组合: 按指定的顺序依次执行
+					$("#img3").slideUp(3000).slideDown(3000).fadeOut(3000).fadeIn(3000).hide(3000).show(3000).fadeTo(3000,0.2);
+				});				
+				
+				
+			});
+
+
+
+		</script>
+
+	</body>
+	
+</html>
+
+

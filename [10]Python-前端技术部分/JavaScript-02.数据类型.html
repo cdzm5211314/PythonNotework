@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-数据类型</title>
+		
+		<script type="text/javascript" charset="UTF-8">
+			
+			// JavaScript - 基本数据类型
+			// number, string, boolean, undefined, null
+			
+			// JavaScript - 声明变量(使用关键字: var)
+			var num;  // 声明变量
+			num = 10; // 给变量进行赋值
+			
+			// typeof()查看变量类型
+			var a = 123456  // 声明变量的时候同时进行赋值
+			document.write(typeof(a)); // number  
+			document.write("<br />");
+			
+			var b;
+			// 当一个变量未被初始化的时候,它的值为undefined
+			document.write(typeof(b)); // undefined 未定义
+			document.write("<br />");
+			
+			var c = null;
+			document.write(typeof(c)); // object
+			document.write("<br />");
+			
+			
+			// 创建(类)对象定义
+			function student(){
+				// 定义当前这个对象的属性
+				this.name;
+				this.age;
+				// 定义当前这个对象的方法
+				this.show = function(){
+					document.write(this.name + ":" + this.age)
+				};
+			}
+			
+			// 定义类,然后创建对象 - 使用关键字new 
+			var stu = new student();
+			stu.name = "zhangsan";  // 给属性进行赋值
+			stu.age = 21;
+			stu.show();  // 调用对象的方法
+			
+			
+			// 使用JSON字符串创建对象: {属性:属性值, 属性:属性值}
+			var person_obj = {
+					name: "张三", 
+					age: 21, 
+					sex: "男",
+					arr: [1,3,5,7,9],  // 属性为数组
+					show: function(){
+						alert("对象的属性方法")
+					}
+				};
+			document.write(person_obj.name);
+			document.write("<br />");
+			document.write(person_obj.arr);
+			document.write("<br />");
+			person_obj.show();  // 调用对象的show()方法
+			document.write("<br />");
+			
+			// 数组的类型: object
+			// 定义数组方式一
+			var arr = [1, 3, 7];  // 创建数组,并赋值
+			document.write(arr);
+			document.write("<br />");
+			document.write(typeof(arr));
+			document.write("<br />");
+			
+			// 定义数组方式二
+			var arr2 = new Array(3);  // 创建数组,并指定有三个元素
+			arr2[0] = "飞";  // 给数组对应的下标进行赋值
+			arr2[1] = "机";
+			arr2[2] = "票";
+			document.write(arr2[2]);  // 根据数组下标获取元素值
+			document.write("<br />");
+			document.write(arr2[3]);  // 获取一个不存在的下标的值返回undefined
+			document.write("<br />");
+			document.write(arr2.length)  // 获取数组的长度
+			document.write("<br />");
+			arr2[3] = "新加元素"  // 动态给数组添加一个新元素
+			document.write(arr2.length)
+			document.write("<br />");
+			
+			// 数组中存入对象
+			var students = [
+				{name: "zhangsan", age: 18, sex: "男"},
+				{name: "lisi", age: 21, sex: "男"},
+				{name: "wangwu", age: 28, sex: "女"}
+			]
+			// 获取数组中对象的属性值
+			document.write(students[2].name);  
+			document.write(students[3].name);  // 获取一个不存在的数组元素,获取不到
+			document.write("<br />");
+			
+			
+		</script>
+		
+		
+	</head>
+	<body>
+		
+		
+		
+	</body>
+</html>

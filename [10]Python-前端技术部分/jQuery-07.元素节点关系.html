@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-元素节点关系</title>
+		
+		<!--
+			节点关系: 
+				parent(): 返回被选元素的直接父元素(集合)
+				children(): 返回被选元素的所有直接子元素
+				find(条件): 返回被选元素的后代元素,一路向下直到最后一个后代
+				siblings(): 返回被选元素的所有同胞元素
+				next(): 返回被选元素的下一个同胞元素
+		-->
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		
+	</head>
+	<body>
+		
+		<div id="div1">
+			<p >p标签一内容</p>
+			<p >p标签二内容</p>
+			<div id="div2">
+				<p >p标签三内容</p>
+				<p id="p1">p标签四内容</p>
+				<p >p标签五内容</p>
+			</div>
+		</div>
+		
+		
+		
+		<script type="text/javascript" charset="UTF-8">
+
+		$(function(){
+			// parent() 只会向上移动一次,返回的是直接父元素;集合
+			var fa = $("p").parent();
+			alert(fa[0].nodeName);
+			
+			// children() 获取直接子元素,不包含换行符;集合
+			var sons = $("#div1").children();
+			alert(sons.length)
+			
+			// find() 返回被选元素的后代元素,一路向下直到最后一个;集合
+			// 如: 获取div元素下的所有p元素标签
+			var ss = $("div").find("p");
+			var ss = $("div").find("*");  // *代表所有后代元素都匹配
+			alert(ss.length)
+			
+			// siblings() 同级别的同胞元素,前后都算;集合
+			// 注: 不算被选元素本身
+			var s = $("#p1").siblings();
+			alert(s.length)
+			
+			// next() 被选元素的下一个同胞元素;集合
+			var s = $("#p1").next();
+			alert(s.length)
+		});
+
+
+
+		</script>
+
+	</body>
+	
+</html>
+
+

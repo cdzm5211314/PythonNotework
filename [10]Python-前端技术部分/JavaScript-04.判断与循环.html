@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-判断与循环</title>
+		
+		<script type="text/javascript" charset="UTF-8">
+			
+			// JavaScipt - 判断与循环
+			
+			// 注: if直接判断变量时,如果变量值为undefined,null,则表示false,反之为true
+			// 注: if直接判断变量时,如果变量没有定义,则抛出异常
+			
+			// 判断语句: if - else
+			var i = 5;
+			if (i == 5){
+				document.write("i等于5")
+			}else{
+				document.write("i不等于5")
+			}
+			
+			document.write("<br />");
+			
+			// 判断语句: swith
+			var j = 5;
+			switch(j){
+				case 1:
+					document.write("星期一");
+					break;
+				case 2:
+					document.write("星期二");
+					break;
+				case 3:
+					document.write("星期三");
+					break;
+				case 4:
+					document.write("星期四");
+					break;
+				case 5:
+					document.write("星期五");
+					break;
+				case 6:
+					document.write("星期六");
+					break;
+				case 1:
+					document.write("星期日");
+					break;
+				default: 
+					document.write("你的信息不对");
+			}
+			
+			document.write("<hr />");
+			
+			// 循环语句: while ; do-while ; for ; 增强for循环
+			// 注: break结束循环,continue结束本次循环
+			
+			// // 使用while循环
+			var sum2 = 0;
+			var y = 1;
+			while(y <= 100){
+				sum2 += y;
+				y++;
+			}
+			document.write("1-100的和为: " + sum2 + "<br />")
+			
+			// 使用do-while循环
+			var sum3 = 0;
+			var z = 1;
+			do{
+				sum3 += z;
+				z++;
+			}while(z <= 1000);
+			document.write("1-1000的和为: " + sum3 + "<br />")
+			
+			// 使用for循环
+			var sum1 = 0;
+			for(var x=1; x<=10000; x++){
+				sum1 += x;
+			}
+			document.write("1-10000的和为: " + sum1 + "<br />")
+			
+			// 使用增强for循环
+			var arr = [10,20,30,40,50]
+			for(var i in arr){
+				// 注: i指的是arr数组中的下标,而不是元素
+				document.write(arr[i] + "<br />")
+			}
+			
+			var arr2 = new Array(3)
+			arr2['CN'] = "中国";
+			arr2["US"] = "美国";
+			for(var i in arr2){
+				document.write(i + "<br />")
+				document.write(arr2[i] + "<br />")
+			}
+			
+			// void的使用
+			// 注: void()执行一些代码,但不返回结果
+			
+			
+			document.write("<br />");
+			
+		</script>
+		
+		
+	</head>
+	<body>
+		
+		<a href="#">跳转</a>
+		
+		<a href="javascript:void(0);">单击后不会发生任何变化</a>
+
+	</body>
+	
+</html>
+
+

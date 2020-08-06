@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-JSON的使用</title>
+		
+		<!--JSON数据:
+			JSON 是存储和传输数据的格式
+			JSON 经常在数据从服务器发送到网页时使用
+			JSON数据: 键值对的形式
+			JSON对象: {key1:value1, key2:value2, ... }
+			JSON字符串: "{key1:value1, key2:value2, ... }"
+			JSON数组: [{key1:value1, key2:value2, ... },{key3:value3, key4:value4, ... }]
+		-->
+		
+		<!--JSON值的数据内型:
+			数字: 整数与浮点数
+			字符串: 在双引号或单引号中
+			布尔值: true或false
+			数组: []中括号内
+			对象: {}花括号内
+			null: 
+			JSON值的数据内型不可以是: 函数,日期,undefined
+		-->
+		
+		<!--
+			JSON 文件的文件内型是: ".json"
+			JSON 文本的MIME内型是: "application/json"
+		-->
+		
+		<script type="text/javascript">
+			
+			// 把JSON字符串转换为Javascript对象: JSON.parse()
+			var json_str = '{"name":"zhangsan", "age":18, "sex":"男"}';
+			var javascript_obj = JSON.parse(json_str);	
+			document.write("JSON字符串转JSON对象(parse): " + javascript_obj + "<br />");
+			
+			
+			// 把JavaScript对象转换为JSON字符串: JSON.stringify()
+			var javascript_obj = {"name":"wangwu", "age":21, "sex":"女"};
+			var json_str = JSON.stringify(javascript_obj);
+			document.write("JSON对象转JSON字符串(stringify): " + json_str + "<br />");
+			
+			// 把JavaScript数组对象转换为JSON字符串: JSON.stringify()
+			var javascript_obj = [{"name":"wangwu", "age":21, "sex":"女"},{"name":"lisi", "age":32, "sex":"男"}];
+			var json_str = JSON.stringify(javascript_obj); 
+			document.write("JSON数组对象转JSON字符串(stringify): " + json_str + "<br />");
+			
+			
+			
+		</script>
+		
+	</head>
+	<body>
+		
+
+
+	</body>
+	
+</html>
+

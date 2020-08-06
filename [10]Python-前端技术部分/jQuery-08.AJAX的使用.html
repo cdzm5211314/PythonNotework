@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-AJAX的使用</title>
+		
+		<!--
+			原生的JavaScript发送AJAX请求:
+				function ajaxrequest(){
+					// 1.创建XMLHttpRequest对象
+					var xhr = new XMLHttpRequest();
+					// 2.设置回调函数onreadystatechange
+					xhr.onreadystatechange = function(data){
+						// xhr.readyState代表服务器状态; xhr.status代表响应结果
+						if(xhr.readyState==4 && xhr.status==200){
+							alert(xhr.responseText);
+						}
+					}
+					// 3.open(method, url, async)  打开连接
+					// 4.send()  发送请求,一般用于POST请求
+				}
+		-->
+		
+		<!-- 
+			jQuery: ajax()方法常用参数
+				url: 发送请求的地址,字符串类型,(默认:当前页地址)
+				type: 发送请求的方式,"GET"(默认)或"POST",注意:其它 HTTP请求方法,如PUT和DELETE也可以使用,但仅部分浏览器支持
+				data: 发送到服务器的数据,object或字符串类型数据
+				contentType: 默认:"application/x-www-form-urlencoded",发送至服务器请求的数据类型
+				dataType: 服务器响应的数据类型;如果不指定,jQuery将自动根据HTTP包MIME信息来智能判断
+					"xml": 返回 XML文档,可用jQuery处理
+					"html": 返回纯文本HTML信息;包含的script标签会在插入dom时执行
+					"json": 返回JSON数据
+					"text": 返回纯文本字符串
+					"jsonp": JSONP格式;使用JSONP形式调用函数时,如 "myurl?callback=?"jQuery将自动替换?为正确的函数名,以执行回调函数
+					"script": 返回纯文本JavaScript代码;不会自动缓存结果;除非设置了"cache"参数;'''注意:'''在远程请求时(不在同一个域下),所有POST请求都将转为GET请求;(因为将使用DOM的script标签来加载)
+				success: 请求成功后的回调函数;参数:由服务器返回,并根据dataType参数进行处理后的数据,描述状态的字符串
+				
+				error: 请求失败后的服务器回调函数
+				complete: 请求完成时运行的函数(在请求成功或失败之后均调用,即在 success 和 error 函数之后)
+				async：默认true异步请求,设置为false同步请求后,JS不会向下执行,而是原地等待服务器返回数据,并完成相应的回调函数后,再向下执行
+				cache: 默认是true,表示浏览器缓存被请求页面
+				timeout: 设置请求超时时间（毫秒）
+				username: 访问认证请求中携带的用户名,字符串类型
+				password: 返回认证请求中携带的密码,字符串类型
+			
+			jQuery: get(url, callback)方法常用参数
+				url: 必须参数,发送请求的地址
+				callback: 可选参数,请求成功后所执行的函数名
+			
+			jQuery: post(url, data, callback)方法常用参数
+				url: 必须参数,发送请求的地址
+				data: 可选参数,发送到服务器的数据
+				callback: 可选参数,请求成功后所执行的函数名
+
+		-->
+		
+		<!--
+			HTML-DOM文档加载步骤:
+				1.解析HTML结构
+				2.加载外部的脚本和样式文件
+				3.解析并执行脚本代码
+				4.执行$(function(){})内对应代码
+				5.加载图片等二进制资源
+				6.页面加载完毕;执行window.onload
+		-->
+		
+		<!-- 
+			文档加载完成事件: ready() 和 onload()
+				window.onload(): 是在整个界面全部加载完成以后才开始执行,包含图片,视频...等文件
+				$(document).ready(): 是在DOM文档结构加载完成以后开始执行,不包含图片,视频...等文件
+			注: $(document).ready(function(){}) 可简写为: $(function(){});
+		-->
+		
+		<!--
+			注意: 前后端交互开发时注意事项
+				1.确定前端是否传递数据,传递什么数据,什么格式
+					get传参: /car/add?param1=value1&param2=value2
+					post传参: {'param1':'value1','param2':'value2'}
+					url传参: url路由配置时捕获参数
+				2.确定前端访问的方式(GET或POST)
+					如果涉及到数据的修改(添加,修改,删除),采用POST请求方式
+					如果只涉及数据的获取(查询),采用GET请求方式
+				3.确定后端返回给前端的什么数据,什么格式	
+		-->
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		
+	</head>
+	<body>
+		
+		
+		
+		<script type="text/javascript" charset="UTF-8">
+
+		// 页面文档加载完成后执行
+		$(function(){
+
+	        // 获取页面需要发送ajax请求的标签
+	        $('#JsButton').click(function () {  // input标签type类型: submit本身就具有提交动作
+	            // 获取请求参数数据,如
+	            // 如果拿的是非表单类元素的值,用text(),如果是表单类元素用val()
+	            var name = $('#companyName').val();
+	            // 发送ajax请求
+	            $.ajax({
+	                // 如下是ajax请求配置项及服务器响应后的处理:
+	                url: "/greet",  // 请求的url地址
+	                type: "POST",  // 请求方式: GET 或 POST
+	                data: {  // 请求数据,django项目中form表单添加内容"csrfmiddlewaretoken":'{{ csrf_token }}'
+	                    'name': 'jenny',
+	                    "csrfmiddlewaretoken": '{{ csrf_token }}',
+	                    // 使用jQuery取出csrfmiddlewaretoken的值，拼接到data中
+	                    // "csrfmiddlewaretoken": $("[name = 'csrfmiddlewaretoken']").val(),
+	                },
+	                dataType: "json",  // 请求数据的类型
+	                success: function (data) {  // 请求成功后的回调函数
+	                    if(data.status == "ok"){  // 根据响应的信息做相应的处理
+	                        // alert(JSON.stringify(data))  // 把服务器返回的Json字符串数据转换成JavaScript类型数据
+	                        window.location.reload();  // 页面刷新
+	                        window.location.href = '跳转的目标URL地址';  // 页面跳转
+	                    }else{
+	                        alert(data.msg);
+	                    }
+	                },
+	                error: function () {
+	                    alert('error');  // 请求失败后的回调函数
+	                },
+	            });
+	            // 如果你不想让submit有提交的动作,那么就需要在事件函数的最后返回false,阻止提交动作的发生
+	            // return false;
+	        });
+		
+		
+		
+		});
+
+
+
+		</script>
+
+	</body>
+	
+</html>
+
+

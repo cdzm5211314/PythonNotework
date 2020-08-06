@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-函数与事件</title>
+		
+		<script type="text/javascript" charset="UTF-8">
+			
+			// JavaScipt - 函数
+			/*
+				使用function关键字定义函数
+				参数列表列表可写可不写,如果写了不用书写var,传什么值就是什么类型
+				函数不用书写返回值类型;如果该方法需要一个返回值,则直接书写 return 值;就可以
+			
+			*/
+			
+			function func1(param1, param2){
+				return param1 + param2;
+			}
+			// 调用函数
+			var result = func1(3, 5);
+			document.write(result + "<br />");
+			
+			
+			// 匿名函数: 没有名字的函数,如果想执行,赋值给一个变量
+			var niming1 = function(){
+				document.write("这是一个匿名函数"+ "<br />");
+			}
+			// 调用匿名方法
+			niming1();
+			
+			
+			// 匿名函数自执行,执行一次
+			(function(){
+				document.write("这是一个匿名函数"+ "<br />");
+			})();
+			
+			
+			// JavaScipt - 回调函数
+			function demo1(a, b, callback){
+				document.write("a + b = "+ (a+b) + "<br />");
+				callback();   // 调用回调函数
+			}
+			function test1(){
+				document.write("这是回调函数" + "<br />");
+			}
+			demo1(5, 9, test1)
+			
+			
+			// JavaScipt - 匿名回调函数
+			function demo2(a, b, callback){
+				sum = a + b;
+				return callback(sum);  // 调用回调函数并传递参数
+			}
+			var result = demo2(3, 5, function(num){
+				return num+=1;
+			});
+			document.write("这是匿名回调函数返回值: " + result + "<br />");
+			
+			
+			// JavaScipt - 系统函数
+			// var result = alert("弹窗提示框")
+			// document.write(result + "<br />");  // undefined
+			
+			// var result = confirm("确定删除吗?")
+			document.write(result + "<br />");
+			if(result == true){
+				// 调用删除的servlet
+				document.write("删除成功" + "<br />");
+			}else{
+				// 不调用删除的servlet
+				document.write("取消删除" + "<br />");
+			}
+			
+			// 注: 通过prompt()输入的内容都是string类型
+			// var result = prompt("请输入内容: ")
+			document.write("你输入了: " + result + "<br />");
+			
+			// parseInt() 字符串转换整数
+			var result = parseInt(result)  // 函数会把符合要求的进行转换
+			document.write("你输入的数字为: " + result + "类型为: " + typeof(result) + "<br />");
+			
+			// parseFloat() 字符串转换小数
+			
+			// isNaN() 判断内容是不是 不是一个数字
+			if(isNaN(result)){
+				document.write("你输入的不是数字" + "<br />");
+			}else{
+				document.write("你输入了: " + result + "<br />");
+			}
+			
+			
+			
+			// JavaScipt - 事件
+			function warning(){
+				document.write("你点击了按钮,你想干什么? <br />");
+			}
+			// 事件名 = function (){}
+			
+			
+			// JavaScript - 计时时间
+			// setInterval()  // 间隔指定的毫秒数不停地执行指定的代码
+			// clearInterval() // 用于停止 setInterval() 方法执行的函数代码
+			// setTimeout()   // 在指定的毫秒数后执行指定代码
+			
+			
+		</script>
+		
+		
+	</head>
+	<body>
+		
+		<!-- onchange离开光标触发事件 -->
+		用户名: <input type="text" onchange="alert('内容发生了更改');"/>
+		
+			
+		<!-- onclick鼠标点击事件 -->
+		<button onclick="warning();">点击按钮</button>
+		
+		<!-- onmouseover鼠标移动到此处事件 -->
+		<!-- onmouseout鼠标离开到此处事件 -->
+		<table align="center" border="1">
+			<tr onmouseover="this.style.backgroundColor='red'" onmouseout="this.style.backgroundColor='white'">
+				<td>第1行第1列</td>
+				<td>第1行第2列</td>
+				<td>第1行第3列</td>
+			</tr>
+			<tr  onmouseover="this.style.backgroundColor='yellow'" onmouseout="this.style.backgroundColor='white'">
+				<td>第2行第1列</td>
+				<td>第2行第2列</td>
+				<td>第2行第3列</td>
+			</tr>
+		</table>
+		
+		<!-- onkeydown 用户按下键盘按键 -->
+		<!-- onload 浏览器已经完成页面加载 -->
+		<!-- onblur 元素失去焦点 -->
+		<!-- onfocus 元素获得焦点 -->
+		<!-- ondblclik 鼠标双击事件 -->
+		<!-- onsubmit 确认按钮被点击 -->
+		<!-- onselect 文本被选中 -->
+		
+		
+	</body>
+	
+</html>
+
+

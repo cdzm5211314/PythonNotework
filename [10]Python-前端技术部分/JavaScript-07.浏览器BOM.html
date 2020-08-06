@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-浏览器BOM</title>
+		
+		<script type="text/javascript" charset="UTF-8">
+			// JavaScipt - BOM
+			/*
+			浏览器对象模型(BOM): 使JavaScript有能力与浏览器对话
+			所有浏览器都支持 window 对象,它代表浏览器的窗口
+				全局变量是 window 对象的属性
+	                              全局函数是 window 对象的方法
+	                    所有Javascript全局对象和函数及变量均自动成为window对象成员
+			甚至 document 对象也是 window 对象属性
+			
+			*/
+			
+			// 浏览器窗口的宽度(innerWidth)与高度(innerHeight)
+			// 注: 都是以像素计算,浏览器窗口不包括工具栏和滚动条
+			
+			document.write(window.innerWidth + "<br />");
+			document.write(window.innerHeight + "<br />");
+			window.document.write(window.innerWidth + "<br />");
+			window.document.write(window.innerHeight + "<br />");
+			
+			// 涵盖所有浏览器
+			var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			
+			// 浏览器其他窗口的方法
+			// window.open()  // 打开新窗口
+			// window.close()  // 关闭当前窗口
+			// window.moveTo()  // 移动当前窗口
+			// window.resizeTo()  // 重新调整当前窗口
+			
+			// window.screen 对象获取访问者屏幕的可用宽度与高度
+			// 注: 可省略window前缀书写
+			document.write(window.screen.availWidth + "<br />");
+			document.write(window.screen.availHeight + "<br />");
+			
+			// window.location 对象获取当前页面地址（URL）并把浏览器重定向到新页面
+			// 注: 可省略window前缀书写
+			document.write(window.location.href + "<br />");  // 返回当前页面的url地址
+			document.write(window.location.hostname + "<br />");  // 返回 web主机的域名
+			document.write(window.location.port + "<br />");  // 返回 web主机的端口
+			document.write(window.location.pathname + "<br />");  // 返回当前页面的路径或文件名
+			document.write(window.location.protocol + "<br />");  // 返回使用的 web 协议（http: 或 https:）
+			// document.write(window.location.assign() + "<br />");  // 加载新文档
+			
+			function chongdingxiang(){
+				// 重定向
+				window.location.href = "https://www.baidu.com"
+			}
+			
+			// window.history 对象包含浏览器的历史信息
+			// 注: 可省略window前缀书写
+			// history.back() // 等同于在浏览器点击后退按钮
+			// history.forward() // 等同于在浏览器中点击前进按钮
+			
+			
+			
+			document.write("<br />");
+			window.document.write("<br />");
+			
+			
+			
+		</script>
+		
+		
+	</head>
+	<body>
+
+		<a href="#" onclick="chongdingxiang();">重定向</a>
+
+	</body>
+	
+</html>
+
+

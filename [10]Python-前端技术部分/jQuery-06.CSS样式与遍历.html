@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-CSS样式与遍历</title>
+		
+		<!--
+			jQuery操作CSS样式方法:
+				addClass(): 向被选元素添加一个或多个类(class属性)
+				removeClass(): 从被选元素删除一个或多个类(class属性)
+				toggleClass(): 对被选元素进行添加/删除类的切换操作
+				css(): 设置或返回样式属性:
+					css(property, value);
+					css({property1:value1, proerty2:value2, ...);
+		-->
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		<style type="text/css">
+			.a{
+				font-size: 30px;
+				color: #e99557;
+			}
+			
+			.b{
+				font-family: 华文彩云;
+				color: #00FF7F;
+			}
+			
+		</style>
+		
+	</head>
+	<body>
+		
+		<p>p标签一内容</p>
+		<p>p标签二内容</p>
+		<p>p标签三内容</p>
+		
+		
+		<hr />
+		
+		
+		<script type="text/javascript" charset="UTF-8">
+
+		$(function(){
+			
+			// CSS样式添加
+			$("p").mouseover(function(){
+//				$(this).addClass("a");
+				// toggleClass()自行判断是否有class属性,有就移除属性,没有就添加属性
+				$(this).toggleClass("a");
+			}).mouseout(function(){
+//				$(this).removeClass("a");
+				
+//				$(this).addClass("b");
+				
+				$(this).toggleClass("a");
+			});
+			
+			
+			// 遍历集合元素: for
+			var ps = $("p");  // 获取p元素的集合
+			for(var i=0; i<ps.length; i++){
+				// 获取p标签的文本内容
+				console.log($(ps[i]).text())
+			}
+			
+			// 遍历集合元素: each
+			var ps = $("p");  // 获取p元素的集合
+			$(ps).each(function(i, v){
+				// i代表下标, v代表标签对象
+				alert(i + "--->" + $(v).text());
+			});
+			
+			// 遍历集合元素: each
+			var ps = $("p");  // 获取p元素的集合
+			// 第一个参数代表要遍历的对象
+			$.each($(ps), function(i, v){
+				// i代表下标, v代表标签对象
+				alert(i + "+++>" + $(v).text());
+			});
+
+
+		});
+
+
+
+		</script>
+
+	</body>
+	
+</html>
+
+

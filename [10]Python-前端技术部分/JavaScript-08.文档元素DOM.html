@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript-文档元素DOM</title>
+
+	</head>
+	<body id="body1" name="body1">
+		
+		<div id="div1" class="div1">
+			这是一个div标签
+			<!-- 注释内容 -->
+		</div>
+		
+		<a href="#" id="a1" onclick="chang();">这是个超链接</a><br />
+	
+		<img src="img/bq0000.jpg" id="img1" width="30" height="30"/>
+		<button onclick="chang2();">修改图片</button>
+		
+		<h3 id="hh3">标签三</h3>
+		<button onclick="changeStyle();">修改样式</button>
+		
+		<div id="div2" class="div2">
+			<p id="p1">p1标签</p>
+			<p id="p2" >p2标签</p>
+			<div id="div3">
+				<p id="p3">p3标签</p>
+				<p id="p4">p4标签</p>
+			</div>
+		</div>
+		<button onclick="newEle1();">在id=div2的div标签中追加元素</button><br >
+		<button onclick="newEle2();">在id=div2的div标签中id=p2前添加元素</button><br >
+		<button onclick="newEle3();">新建p标签,并在此标签中添加文本内容</button><br >
+		<button onclick="newEle4();">删除id=p2的p标签-自己删除自己</button><br >
+		<button onclick="newEle6();">替换id=3的div标签下的id=p3的p标签为sapn标签</button><br >
+		
+		<table border="1">
+			<tr>
+				<td>单元格1</td>
+				<td>单元格2</td>
+				<td><button onclick="newEle5(this);">根据父节点进行删除</button></td>
+			</tr>
+			<tr>
+				<td>单元格1</td>
+				<td>单元格2</td>
+				<td><button onclick="newEle5(this);">根据父节点进行删除</button></td>
+			</tr>
+		</table>
+
+
+
+		<hr />
+		<script type="text/javascript" charset="UTF-8">
+			// JavaScipt - 文档元素DOM
+			/*
+			JavaScript 能够访问和改变 HTML 文档的所有元素
+			文档对象模型(DOM): 当网页被加载时，浏览器会创建页面的文档对象模型（Document Object Model）
+				HTML DOM 方法是能够（在 HTML 元素上）执行的动作
+				HTML DOM 属性是能够设置或改变的 HTML 元素的值
+			在HTMl中,一切都是节点
+				元素节点: HTML的标签
+				文本节点: 标签中的文字
+				属性节点: 标签的属性
+			DOM的节点属性:
+				nodeName: 节点的名称,只读
+					元素节点的 nodeName 与标签名相同
+					属性节点的 nodeName 是属性的名称
+					文本节点的 nodeName 永远都是#text
+				nodeValue: 节点的值
+					元素节点的 nodeValue 是undefined或null
+					属性节点的 nodeValue 是属性的值
+					文本节点的 nodeValue 是文本自身
+				nodeType: 节点的类型,只读
+					元素节点的 nodeType 是	1
+					属性节点的 nodeType 是	2
+					文本节点的 nodeType 是	3
+					注释节点的 nodeType 是	8
+					文档节点的 nodeType 是	9
+			
+			*/
+
+			// console.log(document.body.nodeName);
+			// 获取元素节点,属性节点,文本节点的名称
+			document.write(document.body.nodeName + "<br />");
+			document.write(document.body.attributes[1].nodeName + "<br />");
+			document.write(document.getElementById("div1").childNodes[0].nodeName + "<br />");
+			document.write("<hr />");
+			
+			// 获取元素节点,属性节点,文本节点的值
+			document.write(document.body.nodeValue + "<br />");
+			document.write(document.body.attributes[1].nodeValue + "<br />");
+			document.write(document.getElementById("div1").childNodes[0].nodeValue + "<br />");
+			document.write("<hr />");
+			
+			// 获取元素节点,属性节点,文本节点的类型
+			document.write(document.body.nodeType + "<br />");
+			document.write(document.body.attributes[1].nodeType + "<br />");
+			document.write(document.getElementById("div1").childNodes[0].nodeType + "<br />");
+			document.write(document.getElementById("div1").childNodes[1].nodeType + "<br />");
+			document.write(document.nodeType + "<br />");
+			document.write("<hr />");
+			
+			
+			// 获取父节点;一个节点只有一个父节点;调用方式: 节点.parentNode
+			// 获取body的父节点
+			var parents = document.body.parentNode;
+			
+			// 获取所有子节点;调用方式: 父节点.childNodes
+			// 注: 返回的是指定元素的子节点集合(包含元素节点,属性节点,文本节点)
+			// 获取body的所有子节点集合
+			var childs = document.body.childNodes;
+			
+			// 获取元素节点的属性集合;调用方式: 节点.attributes
+			var attr = document.body.attributes;
+			
+			
+			// 获取元素标签
+			document.getElementById("div1")  // 通过元素 id 来查找元素,获取单个
+			document.getElementsByTagName("div")  // 通过标签名来查找元素,获取多个
+			document.getElementsByClassName("div1")  // 通过class类名来查找元素,获取多个
+			
+			
+			// 修改元素标签文本内容
+			function chang(){
+				/*
+					innerText 和 innerHTML 相同的是:
+						innerText 和 innerHTML
+					innerText 和 innerHTML 相同的是:
+						innerText 无论写什么,都会当成文本进行使用
+						innerHTML 会解析内容,如果有页面标签,就会进行编译
+				*/
+				// document.getElementById("a1").innerText = "修改了超链接的文本内容";
+				document.getElementById("a1").innerHTML = "<span>修改了超链接的文本内容</span>";
+			}
+			
+			// 修改元素标签的属性值
+			function chang2(){
+				// 直接调用相关属性进行修改
+				// document.getElementById("img1").src = "img/bq00001.gif";
+				document.getElementById("img1").setAttribute("src","img/bq00001.gif");
+				
+			}
+			
+			// 修改元素标签的CSS样式
+			function changeStyle(){
+				document.getElementById("hh3").style.color = "red";
+				
+			}
+			
+			
+			// 追加元素标签,添加元素标签和删除元素标签
+			function newEle1(){
+				// 创建标签
+				var img = document.createElement("img");
+				// 对标签添加属性和样式
+				img.setAttribute("src","img/bq00001.gif")
+				img.style.width = "20px";
+				img.style.height = "20px";
+				// 获取id="div2"的标签容器
+				var div2 = document.getElementById("div2");
+				// 追加新创建的标签到id="div2"的div标签容器中
+				 div2.appendChild(img);
+				
+			}
+			function newEle2(){
+				// 创建标签
+				var img = document.createElement("img");
+				// 对标签添加属性和样式
+				img.setAttribute("src","img/bq00001.gif")
+				img.style.width = "20px";
+				img.style.height = "20px";
+				// 获取id="div2"的标签容器
+				var div2 = document.getElementById("div2");
+				
+				// 在id=div2的div标签中的id=p2的p标签前添加元素
+				var p2 = document.getElementById("p2");
+				div2.insertBefore(img, p2);
+
+			}
+			function newEle3(){
+				// 创建标签
+				var img = document.createElement("img");
+				// 对标签添加属性和样式
+				img.setAttribute("src","img/bq00001.gif")
+				img.style.width = "20px";
+				img.style.height = "20px";
+				// 获取id="div2"的标签容器
+				var div2 = document.getElementById("div2");
+
+				// 创建新标签并添加文本内容
+				var p5 = document.createElement("p");
+				var text5 = document.createTextNode("这个新建的p5标签内容");
+				p5.appendChild(text5);
+				div2.appendChild(p5);
+			}
+			function newEle4(){
+				// 获取id="p2"的标签元素
+				var p2 = document.getElementById("p2");
+				// 删除元素标签 - 删除自己
+				p2.remove()
+			}
+			function newEle5(obj){
+				// 根据obj(this)获取父节点元素
+				var parent = obj.parentNode.parentNode;
+				console.log(parent);
+				parent.remove();
+			}
+			function newEle6(obj){
+				// 创建新标签并添加文本内容
+				var span = document.createElement("span");
+				var textspan = document.createTextNode("这替换的span标签内容");
+				span.appendChild(textspan);
+				
+				var div3 = document.getElementById("div3");
+				var p3 = document.getElementById("p3");
+				// replaceChild(替换的, 被替换的)
+				// 注: 需要通过父节点来进行替换
+				div3.replaceChild(span, p3);
+			}
+			
+			
+			// 元素标签添加事件处理程序
+			// 注: 对同一个标签添加相同的事件,后面的会覆盖前面的事件
+			// addEventListener(event, function, useCapture)用于向指定元素添加事件句柄,添加的事件句柄不会覆盖已存在的事件句柄
+			// 第一个参数是事件的类型: 如 "click" 或 "mousedown"
+			// 第二个参数是当事件发生时需要调用的函数
+			// 第三个参数是布尔值;指定使用事件冒泡(false默认)还是事件捕获(true);此参数是可选的
+			
+			// removeEventListener(event, function)用于移除事件的监听
+			
+			// element.addEventListener("click", function(){事件代码})
+			// document.getElementById("id").onclick = function(){
+			//		// 代码
+			// }
+			
+			
+			document.write("<br />");
+			
+		</script>
+		
+
+
+	</body>
+	
+</html>
+
+

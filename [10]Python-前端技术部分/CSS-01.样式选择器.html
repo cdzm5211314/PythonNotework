@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CSS-样式选择器</title>
+		<!--
+			CSS样式分类: 
+				内部样式;外部样式;行内样式
+			样式优先级:
+				行内样式优先级最高
+				内部样式与外部样式的优先级和书写的顺序有关,后写的优先级高
+		-->
+				
+		<!-- 第一种: 外部样式使用: 导入外部的xxx.css文件 -->
+		<link href="css/xxx.css" rel="stylesheet" type="text/css" />
+		
+		<!-- 第二种: 内部样式使用 -->
+		<style type="text/css">
+			
+			/* CSS选择器标签(元素)选择器  */
+			/* 语法: 标签名称{ 属性: 属性值; } */
+			/* 选中页面中所有的p标签 */
+			p{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-id选择器  */
+			/* 语法: #id名称{ 属性: 属性值; } */
+			/* 选中页面中所有id="top"的标签 */
+			#top{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-class选择器  */
+			/* 语法: .标签(元素)名称{ 属性: 属性值; } */
+			/* 选中页面中所有class="clazz"的标签 */
+			.clazz{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-*通配符选择器(全局选择器) */
+			/* 语法: *{ 属性: 属性值; } */
+			/* 选中页面中所有的标签 */
+			*{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-交集选择器 */
+			/* 语法: 标签名称+标签中的选择器{ 属性: 属性值; } */
+			/* 选中页面中所有p标签并且id="top"的标签 */
+			p#top{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-并集选择器 (群组选择器)*/
+			/* 语法: 选择器1, 选择器2, ...{ 属性: 属性值; } */
+			/* 选中页面中所有p标签,div标签,id="top"的标签,class="clazz"的标签 */
+			p, div, #top, .clazz{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-后代选择器 (包含选择器)*/
+			/* 语法: 选择器1 选择器2 ...{ 属性: 属性值; } */
+			/* 选中页面中div标签包含p标签的所有标签 */
+			div p{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-子选择器*/
+			/* 语法: 选择器1 > 选择器2{ 属性: 属性值; } */
+			/* 选中页面中div标签下所有子一级的p标签 */
+			div > p{
+				background-color: brown;  /* 背景颜色 */
+			}
+			
+			/* CSS选择器-伪类选择器*/
+			/* 语法: a:xxx{ 属性: 属性值; } */
+			/* 多用于a标签中,正确顺序: link visited hover active */
+			
+			/* 超链接的初始状态 */
+			a:link{
+				color: purple;
+			}
+			
+			/* 超链接被访问后的状态 */
+			a:visited{
+				color: rosybrown;
+			}
+			
+			/* 鼠标悬停,即鼠标划过超链接时的状态 */
+			a:hover{
+				color: red;
+			}
+			
+			/* 超链接被激活时状态,即鼠标按下时的超链接状态 */
+			a:active{
+				color: springgreen;
+			}
+
+			
+		</style>
+		
+	</head>
+	<body>
+		
+		
+		<p>HBuilder 是DCloud（数字天堂）推出一款支持HTML5的Web开发IDE</p>
+		
+		<p id="top">HBuilder 是DCloud（数字天堂）推出一款支持HTML5的Web开发IDE</p>
+		
+		<p class="clazz">HBuilder 是DCloud（数字天堂）推出一款支持HTML5的Web开发IDE</p>
+		<p class="clazz">HBuilder 是DCloud（数字天堂）推出一款支持HTML5的Web开发IDE</p>
+		
+		<div id="div1">
+			<p>HBuilder 是DCloud（数字天堂）推出一款支持HTML5的Web开发IDE</p>
+			<div class="div2">
+				<p>HBuilder 是DCloud（数字天堂）推出一款支持HTML5的Web开发IDE</p>
+			</div>
+		</div>
+		
+		<a href="#">超链接</a>
+
+	</body>
+</html>

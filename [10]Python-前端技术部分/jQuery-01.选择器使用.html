@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQuery-选择器</title>
+		<!--
+			jQuery是一个快速简洁的JavaScript框架,使用最广泛版本1.x,目前有2.x和3.x版本
+			jQuery是一个JavaScript函数库
+			
+		-->
+		
+		<!-- jQuery的安装使用: 下载jQuery库,本地引入文件 -->
+		<script src="js/jquery.js" ></script>
+		
+		<!-- jQuery的安装使用: 从CDN中引入jQuery库 -->
+		<!--<script src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js" ></script>-->
+		
+	</head>
+	<body>
+		<div id="div1">
+			
+			<p id="p1">p1标签</p>
+			<p class="p2">p2标签</p>
+			<p class="p2">p3标签</p>
+			<ul>
+				<li id="l1">星期一</li>
+				<li id="l2">星期二</li>
+				<li id="l3">星期三</li>
+				<li id="l4">星期四</li>
+				<li id="l5">星期五</li>
+			</ul>
+			<div id="div2">
+				<p id="p2">p4标签</p>
+				<p class="p3">p5标签</p>
+				<span>span1标签</span>
+			</div>
+		</div>
+
+		<button id="btu1">隐藏p标签</button><button id="btu2">显示p标签</button><br />
+		<button id="btu3">改变所有p标签样式</button><br />
+		<button id="btu4">改变子代p标签样式</button><br />
+		<button id="btu5">改变第一个p的同辈标签样式</button><br />
+		<button id="btu6">改变第一个p的后续同辈标签样式</button><br />
+		<button id="btu7">修改ul下的li标签样式</button><br />
+		<button id="btu8">修改符合选择属性的标签样式</button><br />
+		
+		
+
+		<script type="text/javascript" charset="UTF-8">
+			// 选择了document,页面加载完成后,触发一个匿名函数
+			// 等DOM树构建完成就执行,之后才执行onload
+//			$(document).ready(function () {
+//				alert("jQuery执行方式");
+//			});
+
+//			$(function () {
+//				alert("简化的jQuery执行方式");
+//			});
+			
+			
+			// jQuery - 标签选择器: $("标签名称")
+			// jQuery - id选择器: $("#id的名称")
+			// jQuery - class选择器: $(".class的名称")
+			$(function(){
+				$("#btu1").click(function(){
+					// 隐藏所有p标签
+//					$('p').hide();	
+					// 隐藏id属性为p1的标签
+//					$("#p1").hide();
+					// 隐藏class属性为p2的标签
+					$('.p2').hide();					
+				})
+				$("#btu2").click(function(){
+					// 隐藏所有p标签
+//					$('p').show();	
+					// 隐藏id属性为p1的标签
+//					$('#p1').show();	
+					// 隐藏class属性为p2的标签
+					$('.p2').show();	
+									
+				})
+				
+			});
+			
+			
+			// jQuery - 层级选择器:后代选择器 
+			// 注: 只要有包含关系就算后代
+			$("#btu3").click(function(){
+				$("div p").css("color", "red");
+			});
+			
+			// jQuery - 层级选择器:父子选择器 >
+			// 注: 只包含该标签下子标签(儿子辈),孙子辈不算☺
+			$("#btu4").click(function(){
+				$("#div1 > p").css("color", "blue");
+			});
+			
+			// jQuery - 层级选择器:同辈选择器 +
+			// 注: 选择的是下一个,相邻的一个
+			$("#btu5").click(function(){
+				$("#p1 + p").css("color", "green");
+			});
+			
+			// jQuery - 层级选择器:后续同辈选择器 ~
+			// 注: 所有符合的同辈都可以选中
+			$("#btu6").click(function(){
+				$("#p1 ~ p").css("color", "peru");
+			});
+			
+			// jQuery - 过滤选择器:
+			$("#btu7").click(function(){
+				// :first 匹配第一个
+//				$("ul li:first").css("color", "cornflowerblue");
+				// :eq(下标) 匹配对应的下标,下标从0开始
+//				$("ul li:eq(1)").css("color", "red");
+				// :gt(下标) 匹配下标大于几的标签,下标从0开始
+				// :lt(下标) 匹配下标小于几的标签,下标从0开始
+				$("ul li:gt(2)").css("color", "yellow");
+				// :not(条件) 取反
+//				$("ul li:not(:eq(1))").css("color", "yellow");
+
+			});
+						
+			// jQuery - 属性选择器:
+			$("#btu8").click(function(){
+				// 精确匹配 id=值
+//				$("li[id=l1]").css("color", "peru");
+				// 所有li标签有id属性的
+//				$("li[id]").css("color", "peru");
+				// $= 所有li标签id属性值以4结尾的
+//				$("li[id$=4]").css("color", "peru");
+				// ^= 所有li标签id属性值以l开始的
+				$("li[id^=l]").css("color", "peru");
+			});			
+			
+			
+		</script>
+
+	</body>
+	
+</html>
+
+
