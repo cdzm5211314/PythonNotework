@@ -74,7 +74,7 @@ from django.utils.deprecation import MiddlewareMixin
 class XxxMiddleware(MiddlewareMixin):
     '''然后根据功能需要,重写那五个方法中的某个或多个方法,如下所示'''
     def process_request(self, request):
-        print("request路径: ", request.GET.path)
+        print("request路径: ", request.path)
         print("访问服务器的IP地址: ", request.META.get("REMOTE_ADDR"))
 # 4.启用(注册)中间件,在settings.py中进行配置,如MIDDLEWARE添加: 包名.文件名.类名
 # 如: 'middleware.mymiddleware.XxxMiddleware'
