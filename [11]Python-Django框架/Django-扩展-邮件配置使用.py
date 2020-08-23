@@ -10,7 +10,7 @@ from django.conf import settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'  # smpt服务地址
 EMAIL_PORT = 25  # 端口号
-EMAIL_HOST_USER = 'configure@163.com'  # 发送邮件的邮箱地址即发件人
+EMAIL_HOST_USER = 'config***@163.com'  # 发送邮件的邮箱地址即发件人
 EMAIL_HOST_PASSWORD = 'asd*****'  # 发送邮件的邮箱[即发件人]中设置的客户端授权密码
 EMAIL_FROM = '天天生鲜<configure@163.com>'  # 收件人看到的发件人
 

@@ -77,9 +77,11 @@ sql = "select * from test_table"
 # num = cursor.execute(sql)
 # print(num)
 cursor.execute(sql)
+
 # 使用fetchone()方法,返回结果集的第一行数据(列表形式)
 tuple1 = cursor.fetchone()
 print(tuple1)
+
 # 使用fetchone()方法,返回结果集的所有行数据(列表形式)
 tuples2 = cursor.fetchall()
 print(tuples2)
