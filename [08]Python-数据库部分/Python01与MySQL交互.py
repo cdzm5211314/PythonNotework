@@ -11,9 +11,11 @@
 # connect(host=None, user=None, password="", database=None, port=0, charset='')
 # host:     连接的MySQL主机地址,如果是本机就是localhost
 # port:     连接的MySQL主机端口号,默认是3306
-# db:       数据库名称
 # user:     连接的用户名
 # password: 连接的用户名的密码
+# passwd:   密码的别名(为了与MySQLdb兼容)
+# database: 数据库名称
+# db:       数据库的别名(为了与MySQLdb兼容)
 # charset:  通信采用的编码方式,默认是"gb2312",要求与数据库创建时指定的编码一致,否则中文会乱码
 
 ## Connection对象方法: 作用:建立与数据库的链接
@@ -36,13 +38,13 @@
 import pymysql
 
 # connect(host=None, user=None, password="", database=None, port=0, charset='')
-# 1.创建Connection数据库对象
-connection = pymysql.connect("localhost","root","root","test")
+# 1.创建Connection数据库对象即打开数据库连接
+connection = pymysql.connect(host='localhost', user='root', password="root", database='pythonexample', port=3306, charset='utf8')
 
-# 2.创建Cursor游标对象
+# 2.获取ursor游标对象
 cursor = connection.cursor()
 
-# 3.使用游标对象,执行SQL语句
+# 3.使用游标对象用来操作数据库,执行SQL语句
 
 ## 保存数据:
 # 要执行的SQL语句: 一次性插入一条数据
@@ -67,22 +69,25 @@ connection.commit()
 
 ## 更改数据:
 sql = 'update person set age=%s where name=%s'
-cursor.execute(sql,[90000,"玉皇大帝"])
+cursor.execute(sql, [90000,"玉皇大帝"])
 connection.commit()
 
 ## 查询数据:
 # 要执行的SQL语句
 sql = "select * from test_table"
 # 使用execute()方法,返回的结果只是获取到的记录数
-# num = cursor.execute(sql)
-# print(num)
-cursor.execute(sql)
+num = cursor.execute(sql)
+print(num)
 
-# 使用fetchone()方法,返回结果集的第一行数据(列表形式)
+# 使用fetchone()方法,返回结果集的第一行数据(元组形式)
+sql = "select * from test_table"
+cursor.execute(sql)
 tuple1 = cursor.fetchone()
 print(tuple1)
 
-# 使用fetchone()方法,返回结果集的所有行数据(列表形式)
+# 使用fetchone()方法,返回结果集的所有行数据(元组套元组的形式)
+sql = "select * from test_table"
+cursor.execute(sql)
 tuples2 = cursor.fetchall()
 print(tuples2)
 
@@ -134,8 +139,6 @@ user3 = User("wangwu","123456")
 session.add_all([user2, user3])
 session.commit()
 
-# ...
-
 
 ############################################################################################
 
@@ -146,7 +149,7 @@ class MySQLHelper(object):
         "host": "localhost",
         "user": "root",
         "password": "root",
-        "db": "chenssq"
+        "database": "chenssq"
     }
 
     def __init__(self):
