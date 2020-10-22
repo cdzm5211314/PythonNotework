@@ -1,4 +1,18 @@
 ###Docker服务与镜像加速器:
+* Docker更改权限配置使用:
+    ```
+    # 问题描述: 从0.5.2开始docker的守护进程总是以root用户来运行;从0.5.3开始，创建一个名为docker组，然后将用户加入这个组内
+    # 解决方式一: 切换root用户运行docker命令
+    sudo su               # 切换到root用户
+    service docker start  # 启动docker service
+    docker images         # 显示所有images
+    docker ps             # 重新运行docker命令
+    # 解决方式二: 添加用户到docker用户组
+    sudo groupadd docker                # 添加docker用户组
+    sudo gpasswd -a myusername docker   # 添加用户到docker用户组
+    sudo service docker restart         # 重启docker服务
+    docker ps                           # 重新运行docker命令
+    ```
 * Docker服务的常用命令:
     ```
     开启Docker服务: systemctl start docker
