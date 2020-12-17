@@ -152,7 +152,7 @@ import time
 from functools import wraps
 
 def decorate(fn):
-    @wraps(fn)
+    @wraps(fn)  # 还原被装饰器修改的原函数属性
     def wrapper(name, x):
         print("发送消息:", name, '来银行办理业务...')
         fn(name, x)

@@ -34,13 +34,30 @@
 - 安装模块包: pip install package_name -i http://mirrors.aliyun.com/pypi/simple
 - 安装模块包: conda install package_name -i http://mirrors.aliyun.com/pypi/simple
 
+### Pip源镜像加速配置: 
+- Windows系统配置: C:\Users\Administrator 用户目录下创建pip目录,并在此目录创建pip.ini文件,添加如下内容
+    ```
+    [global]
+        index-url = https://pypi.douban.com/simple
+        index-url = https://mirrors.aliyun.com/pypi/simple	
+    [install]
+        trusted-host = pypi.douban.com
+        trusted-host = mirrors.aliyun.com
+    ```
+- Linux系统配置: /home/用户目录下创建.pip目录,并在此目录下创建pip.conf文件,添加如下内容
+    ```
+    [global]
+        index-url = http://pypi.douban.com/simple
+        trusted-host =  pypi.douban.com
+    ```
+
 ### 使用Python-IDEL[虚拟环境]
-- 1.首先终端进入到虚拟环境
+- 1.首先终端进入到虚拟环境: activate envs_name
 - 2.终端下的虚拟环境中执行命令: python -m idlelib.idle
 
 ### Shell交互工具[虚拟环境]
-- 1.首先终端进入到虚拟环境
-- 2.安装Ipython工具: pip install Ipython
+- 1.首先终端进入到虚拟环境: activate envs_name
+- 2.安装Ipython工具: pip install ipython
 - 3.终端下的虚拟环境中执行命令: ipython
 
 

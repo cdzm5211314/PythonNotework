@@ -60,7 +60,7 @@ class ClassMate(object):
             self.current_num += 1
             return result
         else:
-            raise StopIteration
+            raise StopIteration()
 
 classMate = ClassMate()
 classMate.add("张三")
@@ -154,7 +154,7 @@ for x in enumerate(names, start=100):
 
 #############################################################################################
 
-### 生成器(generator): 能够动态提供数据的对象,生成器也是迭代器对象
+### 生成器(generator): 能够动态提供数据的对象,生成器也是特殊的迭代器
 # 创建生成器有两种: 生成器表达式 和 生成器函数
 
 ## 一.生成器表达式: (表达式 for 变量　in 可迭代对象 [if 真值表达式])
