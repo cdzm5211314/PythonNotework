@@ -1,8 +1,17 @@
 ### 注: 本机安装Python解释器与安装Anaconda并不冲突,Python解释器配置环境变量
 
 ### Anaconda安装与配置:
-- 下载: https://repo.anaconda.com/archive/  注意版本下载
-- 安装后配置系统环境变量: path E:\Developer_Tools\Anaconda3;E:\Developer_Tools\Anaconda3\Scripts;
+- 下载正常版本: https://repo.anaconda.com/archive/  注意版本下载
+- 下载精简版本：https://repo.anaconda.com/miniconda/
+- 国内源下载：https://mirrors.tuna.tsinghua.edu.cn/anaconda/
+- 安装后配置系统环境变量: path 
+```
+D:\Developer_Tools\Anaconda3 （Python需要）
+D:\Developer_Tools\Anaconda3\Scripts（conda自带脚本）
+D:\Developer_Tools\Anaconda3\Library\bin（JupyterNoteBook动态库）
+D:\Developer_Tools\Anaconda3\Library\usr\bin
+D:\Developer_Tools\Anaconda3\Library\mingw-w64（使用C with python的时候）
+```
 
 ### 查看是否安装成功并更新所有包:
 - 验证: conda --version
