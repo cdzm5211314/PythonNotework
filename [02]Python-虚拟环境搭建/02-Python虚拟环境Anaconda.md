@@ -72,26 +72,31 @@ pip: xxx\Anaconda3\envs\虚拟环境\Lib\site-packages\*
 
 ### Anaconda-conda镜像设置:
 - 注: 由于anaconda的镜像在国外,所以访问会较慢,我们可以手动将镜像设置成清华TUNA镜像源,添加多个镜像源如下
-- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
-- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 
-- conda config --set show_channel_urls yes
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro
+- conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+- 执行生效：conda config --set show_channel_urls yes
+- 查看是否生效：conda config --show channels
 - "conda config --set show_channel_urls yes" 表示设置搜索时显示通道地址设置完成后,就在用户目录下生成.condarc文件，内容如下:
 ``` 如: C:\Users\Administrator\.condarc
 channels:
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
   [删除]- defaults
 show_channel_urls: true
 ```
 - 添加其他镜镜像源:
 ```
 # 清华
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
@@ -99,8 +104,8 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
 conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
 conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
 conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/
-conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/msys2/
 conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/
+conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/msys2/
 conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/
 
 conda config --set show_channel_urls yes
