@@ -9,11 +9,13 @@
 - 退出数据库: `exit;`  `quit;`  `\q;`
 - 数据库表数据的备份与还原:
   - 备份注: -R -E：备份所有(结构&数据&存储过程&函数&事件&触发器)
-  - 数据库全库备份: `mysqldump -u USER -p dbname1 dbname2 ... > localdirname\localfilename.sql `
-  - 数据库单库备份: `mysqldump -u USER -p dbname > localdirname\localfilename.sql `
+  - 数据库某个库的指定表数据备份: `mysqldump -u USER -p dbname table1 table2 ... > localdirname\localtablename.sql `
+  - 数据库某个库数据备份: `mysqldump -u USER -p dbname > localdirname\localfilename.sql `
+  - 数据库多个库数据备份: `mysqldump -u USER -p --databases dbname1 dbname2 > localdirname\localfilename.sql `
+  - 数据库所有库数据备份: `mysqldump -u USER -p --all-databases > localdirname\localfilename.sql `
   - 还原注: 需要先创建数据库,然后再进行数据还原
-  - 数据库多库还原:  `mysql -u USER -p < localdirname\localfilename.sql`
-  - 数据库单库还原:  `mysql -u USER -p dbname < localdirname\localfilename.sql`
+  - 数据库某个库的指定表数据还原:  `mysql -u USER -p dbname < localdirname\localtablename.sql`
+  - 数据库某个库数据还原:  `mysql -u USER -p dbname < localdirname\localfilename.sql`
   - SQL脚本文件还原:  `source localdirname\localfilename.sql`
 
 
