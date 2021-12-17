@@ -33,7 +33,7 @@
 ### 数据库常用内置函数:
 
  - 字符串函数: 
-    - length() 字符串占用字节长度: `select length(fieldname) from tablename;`
+   - length() 字符串占用字节长度: `select length(fieldname) from tablename;`
    - char_length() 字符串包含文字长度:  `select char_length(fieldname) from tablename;`
    - trim() 字符串去掉左右两端的空格:  `select trim(fieldname) from tablename;`
    - mid() 将字符串截取一部分: `select mid(fieldname,1,3) from tablename;`
@@ -182,6 +182,12 @@
   alter table tablename modify fieldname int;
   ```
 
+- 复制数据表：
+  - 1、复制后：既有原表的结构，又有原表的数据，但是字段约束属性丢失 ---> 不推荐使用
+    - create table <新表> select * from <原表>;
+  - 2、复制后：即有原表的结构，又有原表的字段约束属性，但是没有原表数据，可另行复制
+    - create table <新表> like <原表>;
+    - insert into <新表> select * from <原表>;
 
 
 ### 数据操纵语言: DML
@@ -222,6 +228,18 @@
 - `having` 和 `where`的区别：
   - where作用于表或视图，是表和视图的查询条件
   - having作用于分组后的记录，用于选择满足条件的组
+  - 1、where与having都能使用的场景
+    - select id, name, age from student where id = 2;
+    - select id, name, age from student having id = 2;
+   - 2、只能使用where，不能使用having
+    - 注：having要求过滤的条件字段必须在select的搜索显示字段中
+    - select id, name, age from student where money > 50;
+    - select id, name, age from student having money > 50; -- 报错
+  - 3、只能使用having，不能使用where
+    - 3.1、having能使用别名，where不可以
+      - select name as n, age as a, city as c from student having n = 'Tom';
+      - select name as n, age as a, city as c from student where n = 'Tom'; --报错
+    - 3.2、having后面可以使用聚合函数，where不可以
 - select查询示例:
   - 查询结果进行去重: `select distinct fieldname1, fieldname2 from tablename;`
   - 查询时给字段起别名(as可省略): `select fieldname as '字段别名' from tablename;` 
@@ -245,8 +263,9 @@
   - order by进行排序查询:  查询结果默认升序(asc),降序使用desc
     - `select * from tablename order by fieldname1 desc, fieldname2 asc;`
   - limit [start,] nums分页查询: start可选表示从第几条开始,不写默认从0开始,nums表示要查询几行
-    -  `select * from tablename limit 2,5;`
-
+    -  `select * from tablename limit m;`  -- 默认从第一行到第m行
+    -  `select * from tablename limit m, n;`  -- 从第m行开始，往下取n行
+    -  `select * from tablename limit m offset n;`  -- 跳过前n行，取后面的m行
 
 
 ### 数据控制语言: DCL
